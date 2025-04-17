@@ -14,6 +14,7 @@ import { AddPackComponent } from './packs_subs/components/add-pack/add-pack.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './user/services/auth.service';
 import { SignInComponent } from './user/sign-in/sign-in.component';
+import { LostPasswordComponent } from './user/lost-password/lost-password.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SignInComponent } from './user/sign-in/sign-in.component';
     AddPackComponent,
   
     SignInComponent,
+       LostPasswordComponent,
 
 
   ],
