@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './user/services/auth.service';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { LostPasswordComponent } from './user/lost-password/lost-password.component';
+import { SignOutComponent } from './user/sign-out/sign-out.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { LostPasswordComponent } from './user/lost-password/lost-password.compon
   
     SignInComponent,
        LostPasswordComponent,
+       SignOutComponent,
+       ResetPasswordComponent,
 
 
   ],
