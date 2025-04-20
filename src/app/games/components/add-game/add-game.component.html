@@ -56,7 +56,7 @@
 
       <li class="nav-item" role="presentation">
         <a class="nav-link fw-semibold" href="#bootstrap-wizard-validation-tab4" data-bs-toggle="tab"
-           data-wizard-step="5" aria-selected="false" tabindex="-1" role="tab">
+           data-wizard-step="4" aria-selected="false" tabindex="-1" role="tab">
           <div class="text-center d-inline-block">
             <span class="nav-item-circle-parent" style="margin-right: 9px">
               <span class="nav-item-circle">
@@ -83,18 +83,27 @@
         <div class="tab-pane active" role="tabpanel" id="bootstrap-wizard-validation-tab1">
           <div class="mb-2">
             <label class="form-label" for="gameName">Game name</label>
-            <input class="form-control" id="gameName" formControlName="gameName" type="text" placeholder="Example name">
-            <div *ngIf="gameForm.get('gameName')?.invalid && gameForm.get('gameName')?.touched" class="text-danger">
+            <input
+              class="form-control"
+              id="gameName" formControlName="gameName"
+              type="text" placeholder="Example name"
+              [ngClass]="{ 'is-invalid': gameForm.get('gameName')?.invalid && gameForm.get('gameName')?.touched }"
+            >
+            <div *ngIf="gameForm.get('gameName')?.invalid && gameForm.get('gameName')?.touched" style="color: #ec1f00">
               <small>Game name is required (min 3 characters).</small>
             </div>
           </div>
 
           <div class="mb-2">
             <label class="form-label" for="gameDescription">Game description</label>
-            <textarea class="form-control" id="gameDescription" formControlName="gameDescription" rows="4"
-                      placeholder="Description"></textarea>
-            <div *ngIf="gameForm.get('gameDescription')?.invalid && gameForm.get('gameDescription')?.touched"
-                 class="text-danger">
+            <textarea
+              class="form-control"
+              id="gameDescription"
+              formControlName="gameDescription" rows="4"
+              placeholder="Description"
+              [ngClass]="{ 'is-invalid': gameForm.get('gameDescription')?.invalid && gameForm.get('gameDescription')?.touched }"
+            ></textarea>
+            <div *ngIf="gameForm.get('gameDescription')?.invalid && gameForm.get('gameDescription')?.touched" style="color: #ec1f00">
               <small>Game description is required (min 10 characters).</small>
             </div>
           </div>
@@ -107,30 +116,46 @@
 
             <div class="mb-2">
               <label class="form-label" for="publisher">Publisher</label>
-              <input class="form-control" id="publisher" formControlName="publisher" type="text"
-                     placeholder="Publisher example">
-              <div *ngIf="gameForm.get('publisher')?.invalid && gameForm.get('publisher')?.touched" class="text-danger">
+              <input class="form-control"
+                     id="publisher"
+                     formControlName="publisher"
+                     type="text"
+                     placeholder="Publisher example"
+                     [ngClass]="{ 'is-invalid': gameForm.get('publisher')?.invalid && gameForm.get('publisher')?.touched }"
+              >
+              <div *ngIf="gameForm.get('publisher')?.invalid && gameForm.get('publisher')?.touched" style="color: #ec1f00">
                 <small>Publisher is required.</small>
               </div>
             </div>
 
             <div class="mb-2">
               <label class="form-label" for="releaseDate">Release Date</label>
-              <input class="form-control" id="releaseDate" formControlName="releaseDate" type="date">
+              <input
+                class="form-control"
+                id="releaseDate"
+                formControlName="releaseDate"
+                type="date"
+                [ngClass]="{ 'is-invalid': gameForm.get('releaseDate')?.invalid && gameForm.get('releaseDate')?.touched }"
+              >
 
 <!--              <label class="form-label" for="datepicker">Start Date</label>-->
 <!--              <input class="form-control datetimepicker" id="datepicker" formControlName="releaseDate" type="text" placeholder="dd/mm/yyyy" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}' />-->
 
 
               <div *ngIf="gameForm.get('releaseDate')?.invalid && gameForm.get('releaseDate')?.touched"
-                   class="text-danger">
+                   style="color: #ec1f00">
                 <small>Release date is required.</small>
               </div>
             </div>
 
             <div class="mb-2">
               <label class="form-label" for="gameType">Category</label>
-              <select class="form-select" id="gameType" formControlName="gameType">
+              <select
+                class="form-select"
+                id="gameType"
+                formControlName="gameType"
+                [ngClass]="{ 'is-invalid': gameForm.get('gameType')?.invalid && gameForm.get('gameType')?.touched }"
+              >
                 <option value="">Select a category...</option>
                 <option value="Action">Action</option>
                 <option value="Simulation">Simulation</option>
@@ -144,7 +169,7 @@
                 <option value="Horror">Horror</option>
                 <option value="Adventure">Adventure</option>
               </select>
-              <div *ngIf="gameForm.get('gameType')?.invalid && gameForm.get('gameType')?.touched" class="text-danger">
+              <div *ngIf="gameForm.get('gameType')?.invalid && gameForm.get('gameType')?.touched" style="color: #ec1f00">
                 <small>Category is required.</small>
               </div>
             </div>
@@ -152,8 +177,10 @@
             <div class="mb-2">
               <label class="form-label" for="platform">Platforms</label>
               <input class="form-control" id="platform" formControlName="platform" type="text"
-                     placeholder="e.g., PC, Xbox, PlayStation">
-              <div *ngIf="gameForm.get('platform')?.invalid && gameForm.get('platform')?.touched" class="text-danger">
+                     placeholder="e.g., PC, Xbox, PlayStation"
+                      [ngClass]="{ 'is-invalid': gameForm.get('platform')?.invalid && gameForm.get('platform')?.touched }"
+              >
+              <div *ngIf="gameForm.get('platform')?.invalid && gameForm.get('platform')?.touched" style="color: #ec1f00">
                 <small>Platforms are required.</small>
               </div>
             </div>
