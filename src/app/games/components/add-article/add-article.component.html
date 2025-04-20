@@ -1,0 +1,220 @@
+<nav class="mb-2" aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a [routerLink]="['/marketplace']">Articles list</a></li>
+    <li class="breadcrumb-item active">Add article</li>
+  </ol>
+</nav>
+
+<h2 class="mb-4">Add a game</h2>
+
+<div class="card theme-wizard mb-5" data-theme-wizard="data-theme-wizard">
+  <div class="card-header bg-body-highlight pt-3 pb-2 border-bottom-0">
+    <ul class="nav justify-content-between nav-wizard" role="tablist">
+
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active fw-semibold" href="#bootstrap-wizard-validation-tab1" data-bs-toggle="tab"
+           data-wizard-step="1" aria-selected="true" role="tab">
+          <div class="text-center d-inline-block">
+            <span class="nav-item-circle-parent">
+              <span class="nav-item-circle">
+                <i class="fas fa-gamepad"></i>
+              </span>
+            </span>
+            <span class="d-none d-md-block mt-1 fs-9">Game</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <a class="nav-link fw-semibold" href="#bootstrap-wizard-validation-tab2" data-bs-toggle="tab"
+           data-wizard-step="2" aria-selected="false" tabindex="-1" role="tab">
+          <div class="text-center d-inline-block">
+            <span class="nav-item-circle-parent">
+              <span class="nav-item-circle">
+                <i class="fas fa-dollar-sign"></i>
+              </span>
+            </span>
+            <span class="d-none d-md-block mt-1 fs-9">Price</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <a class="nav-link fw-semibold" href="#bootstrap-wizard-validation-tab3" data-bs-toggle="tab"
+           data-wizard-step="3" aria-selected="false" tabindex="-1" role="tab">
+          <div class="text-center d-inline-block">
+            <span class="nav-item-circle-parent">
+              <span class="nav-item-circle">
+                <i class="fas fa-paper-plane"></i>
+              </span>
+            </span>
+            <span class="d-none d-md-block mt-1 fs-9">Submit</span>
+          </div>
+        </a>
+      </li>
+
+
+
+
+
+    </ul>
+  </div>
+
+
+  <div class="card-body pt-4 pb-0">
+    <form [formGroup]="articleFrom" class="needs-validation" id="wizardValidationForm"
+          novalidate="novalidate">
+      <div class="tab-content">
+        <!-- Account Section -->
+
+
+        <div class="tab-pane active" role="tabpanel" id="bootstrap-wizard-validation-tab1">
+          <div *ngIf="choosenGame && selectedGame?.imageUrls?.length" class="mb-3">
+            <div class="carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button *ngFor="let imageUrl of selectedGame.imageUrls; let i = index"
+                        [class.active]="i === 0"
+                        type="button"
+                        [attr.data-bs-target]="'#carouselExampleCaptions'"
+                        [attr.data-bs-slide-to]="i"
+                        [attr.aria-label]="'Slide ' + (i + 1)">
+                </button>
+              </div>
+              <div class="carousel-inner rounded-1">
+                <div *ngFor="let imageUrl of selectedGame.imageUrls; let i = index"
+                     class="carousel-item"
+                     [class.active]="i === 0">
+                  <img class="d-block w-100" [src]="'http://localhost:8080' + imageUrl" alt="Game Image {{i + 1}}"
+                       style="height: 600px; object-fit: cover;"/>
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5 class="text-white" style="margin: 0; font-size: 1.25rem;">{{ selectedGame.gameName }}</h5>
+                    <p class="text-white" style="margin: 0; font-size: 1rem;">{{ selectedGame.publisher }}</p>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide="prev" style="background: none; border: none;">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                <span class="sr-only">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                      data-bs-slide="next" style="background: none; border: none;">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                <span class="sr-only">Next</span>
+              </button>
+            </div>
+          </div>
+
+
+          <div class="mb-2 d-flex align-items-center">
+            <input class="form-control me-2" id="gameName" type="text"
+                   placeholder="Choose a game"
+                   [value]="choosenGame ? selectedGame.gameName : ''"
+                   readonly>
+            <button class="btn btn-phoenix-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#projectsBoardViewModal" style="width: 120px">Choose
+            </button>
+          </div>
+          <input hidden="hidden" formControlName="gameSelect" [value]="selectedGame.gameId">
+
+        </div>
+
+        <!-- Personal Section -->
+        <div class="tab-pane" role="tabpanel" id="bootstrap-wizard-validation-tab2">
+
+
+          <div class="mb-2">
+            <label class="form-label" for="price">Price</label>
+            <input class="form-control" formControlName="price" id="price" type="number" placeholder="$$$">
+            <div *ngIf="articleFrom.get('price')?.invalid && articleFrom.get('price')?.touched" class="text-danger">
+              <small>Price is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Billing Section -->
+        <div class="tab-pane" role="tabpanel" id="bootstrap-wizard-validation-tab3">
+          <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
+            <div class="col-12 col-sm-auto">
+              <div class="text-center text-sm-start">
+                <img class="d-dark-none" src="/assets/img/spot-illustrations/38.webp" alt="" width="220">
+                <img class="d-light-none" src="/assets/img/spot-illustrations/dark_38.webp" alt="" width="220">
+              </div>
+            </div>
+            <div class="col-12 col-sm-auto">
+              <div class="text-center text-sm-start">
+                <h5 class="mb-3">You are all set!</h5>
+                <p class="text-body-emphasis fs-9">Review your data and submit the form.</p>
+                <button class="btn btn-primary" type="button" (click)="onSubmit()" [disabled]="articleFrom.invalid">Submit</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!--         Done Section -->
+
+      </div>
+    </form>
+  </div>
+  <div class="card-footer border-top-0" data-wizard-footer="data-wizard-footer">
+    <div class="d-flex pager wizard list-inline mb-0">
+      <button class="d-none btn btn-link ps-0" type="button" data-wizard-prev-btn="data-wizard-prev-btn">Previous
+      </button>
+      <div class="flex-1 text-end">
+        <button class="btn btn-primary px-6 px-sm-6" type="button" data-wizard-next-btn="data-wizard-next-btn">Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="projectsBoardViewModal" tabindex="-1" aria-labelledby="projectsBoardViewModal"
+     aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content overflow-hidden">
+      <div class="modal-body p-0">
+        <div class="row gx-0 gy-3 border-bottom px-5 px-lg-6 py-4 p-xl-0">
+          <div class="col-12 col-xl-7">
+            <div class="px-xl-6 py-xl-4">
+              <div class="row g-2 align-items-center">
+                <h3>choose a game</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row g-0 d-flex justify-content-center">
+
+
+          <div class="row gx-4 gy-5 mb-6">
+
+            <div *ngFor="let game of games"
+                 class="col-12 col-sm-6 col-md-4 col-lg-4 hover-actions-trigger btn-reveal-trigger">
+              <div class="border border-translucent d-flex flex-center rounded-1 mb-3 p-2"
+                   style="height:180px; overflow: hidden; cursor: pointer">
+                <img class="w-100 h-100" [src]="'http://localhost:8080' + game.imageUrls[game.imageUrls.length - 1]" alt="{{game.gameName}}"
+                     style="object-fit: cover; border-radius: 5px;"
+                     (click)="selectGame(game)" data-bs-dismiss="modal"/>
+              </div>
+              <h5 class="mb-0">{{ game.gameName }}</h5>
+              <a class="btn btn-link p-0" href="/games">View details<span
+                class="fas fa-chevron-right ms-1 fs-10"></span></a>
+            </div>
+
+            <!-- Répétez pour les autres cartes -->
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
