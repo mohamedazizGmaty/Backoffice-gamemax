@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {Game} from "../models/game";
 import {Reviews} from "../models/reviews";
 import {Article} from "../models/article";
+import {Coupon} from "../models/coupon";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class GameServiceService {
   private readonly BASE_URL_GAME = 'http://localhost:8080/api/games';
   private readonly BASE_URL_REVIEW = 'http://localhost:8080/api/games/reviews';
   private readonly BASE_URL_ARTICLE = 'http://localhost:8080/api/articles';
+  private readonly BASE_URL_COUPON = 'http://localhost:8080/api/coupons';
 
   constructor(private http: HttpClient) { }
 
@@ -63,6 +65,14 @@ export class GameServiceService {
 
   deleteArticle(articleId: number): Observable<void> {
     return this.http.delete<void>(`${this.BASE_URL_ARTICLE}/${articleId}`);
+  }
+
+  getCoupons(): Observable<Coupon[]> {
+    return this.http.get<Coupon[]>(`${this.BASE_URL_COUPON}`);
+  }
+
+  addCoupon(couponData: { couponCode: string; discount: number }): Observable<Coupon> {
+    return this.http.post<Coupon>(`${this.BASE_URL_COUPON}`, couponData);
   }
 
 }

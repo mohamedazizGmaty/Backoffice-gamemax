@@ -7,6 +7,7 @@ import {GameListComponent} from "./games/components/game-list/game-list.componen
 import {MarketplaceComponent} from "./games/components/marketplace/marketplace.component";
 import {AddArticleComponent} from "./games/components/add-article/add-article.component";
 import {ArticleDetailsComponent} from "./games/components/article-details/article-details.component";
+import {CouponComponent} from "./games/components/coupon/coupon.component";
 
 const routes: Routes = [
   {path:'allPacks', component: AllPacksComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'marketplace', component: MarketplaceComponent},
   {path:'addArticle', component: AddArticleComponent},
   {path:'articleDetail/:id', component: ArticleDetailsComponent},
+  {path:'coupon', component: CouponComponent},
 
 ];
 

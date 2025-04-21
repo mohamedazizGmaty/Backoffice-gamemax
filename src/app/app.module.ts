@@ -16,6 +16,7 @@ import { GameListComponent } from './games/components/game-list/game-list.compon
 import { MarketplaceComponent } from './games/components/marketplace/marketplace.component';
 import { AddArticleComponent } from './games/components/add-article/add-article.component';
 import { ArticleDetailsComponent } from './games/components/article-details/article-details.component';
+import { CouponComponent } from './games/components/coupon/coupon.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ArticleDetailsComponent } from './games/components/article-details/arti
     GameListComponent,
     MarketplaceComponent,
     AddArticleComponent,
-    ArticleDetailsComponent
+    ArticleDetailsComponent,
+    CouponComponent
 
 
   ],
