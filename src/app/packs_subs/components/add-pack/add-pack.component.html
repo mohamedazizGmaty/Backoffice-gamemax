@@ -47,6 +47,8 @@
         <div class="form-floating">
           <input class="form-control" id="availableDate" type="date"
                  formControlName="availableDate"
+                 [value]="todayDate"
+                 readonly
                  [ngClass]="{ 'is-invalid': packForm.get('availableDate')?.invalid && packForm.get('availableDate')?.touched }">
           <label for="availableDate">Date de disponibilité</label>
           <div *ngIf="packForm.get('availableDate')?.invalid && packForm.get('availableDate')?.touched" class="invalid-feedback">
@@ -67,6 +69,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- Boutons -->
       <div class="col-12 gy-6">

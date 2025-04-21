@@ -1,0 +1,229 @@
+.card-list{ margin-inline:auto; text-align:center;
+  display:flex; justify-content:center;
+  --main-color:rgba(181, 162, 138); --main-color-focus:rgba(181, 162, 138, 0.55); --main-color-out:rgb(119, 106, 90);
+  --drop-shadow-focus:#7f6400; --margin-hidden:15.5rem;/*避免演出進場看到明顯的裁切，讓隱藏範圍擴大到整個card-list*/
+}
+.card-item{ width:min(22vw, 14rem); aspect-ratio:12 / 21;
+  margin-inline:min(1.05vw, 0.4rem); padding:min(2vw, 0.8rem);
+  display:flex; flex-direction:column; justify-content:flex-end; align-content:center;
+  overflow:hidden; position:relative;
+  filter:drop-shadow(0px 0px 0px var(--drop-shadow-focus)) brightness(1);
+  transition:filter 1s, transform 0.5s,margin-inline 0.5s;
+}
+
+.card-item-con{ width:100%; text-align:center; display:grid; grid-template-rows:0fr; opacity:0; transition:all 0.5s; position:relative; z-index:1;}
+.card-item-con > div{ overflow:hidden;/*不佔空間*/ padding-bottom:0; transition:padding-bottom 0.5s;}
+.card-list h2{ margin-top:var(--margin-hidden); margin-bottom:0.9rem;  color:var(--main-color); font-size:2.1rem; font-weight:700; line-height:1.35; opacity:1; transition:color 0.5s,opacity 0.5s, transform 0.8s; position:relative; z-index:1;}
+.card-list p{  margin-bottom:0.9rem; color:#fff; font-size:0.97rem; line-height:1.25; font-weight:500;
+  transform:translateY(25%); opacity:0; transition:opacity 0.5s, transform 0.5s; transition-delay:0.25s; min-height:0;/*不佔空間*/
+}
+.card-list button{
+  /*padding-block:0.33rem;*/
+  /*padding-inline:1.25rem;*/
+  /*font-size:0.9rem; color:#fff;*/
+  /*background-color:transparent;*/
+  /*cursor:pointer;*/
+  /*transform:translateY(25%);*/
+  /*opacity:0;*/
+  /*transition:opacity 0.5s, transform 0.5s;*/
+  /*transition-delay:0.45s;*/
+  /*min-height:0;!*不佔空間*!*/
+
+
+}
+
+/* Style for selected pack */
+.card-item.selected {
+  /* Your selected card styles */
+  box-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+  border-color: #0096ff;
+}
+.btn-select-pack {
+  margin-top: 20px; /* Adjust this value as needed */
+}
+.btn-primary.selected {
+  /* Your selected button styles */
+  background-color: #0096ff;
+  color: white;
+  border-color: #007acc;
+}
+
+/* Optional: Add transition for smooth effect */
+.card-item, .btn-primary {
+  transition: all 0.3s ease;
+}
+@media (max-width:800px) {
+
+  .card-list{ width:75%; flex-wrap:wrap;}
+  .card-item{ width:min(40vw, 13rem); margin-inline:min(1.3vw, 0.35rem); margin-block:min(2.5vw, 0.9rem); }
+  .card-list h2{ font-size:min(6.8vw, 2.1rem);}
+  .card-list p{ font-size:min(3.2vw, 0.98rem); margin-bottom:min(3.25vw, 0.8rem);}
+  .card-list button{ padding-block:min(1.5vw, 0.33rem); padding-inline:min(5vw, 1.25rem); font-size:min(3.5vw, 0.9rem);}
+}
+
+@media (max-width:600px) {
+
+  .card-list{ width:90%; --margin-hidden:min(10vw, 10rem);/*避免演出進場看到明顯的裁切，讓隱藏範圍擴大到整個card-list*/}
+
+}
+
+
+.card-item .bg{ background-repeat:no-repeat;
+  background-size:auto 127%;
+  filter:brightness(1) contrast(105%);
+  transition:filter 1s, background-size 1s;
+  position:absolute; inset:0; z-index:-1;
+}
+.card-item:nth-of-type(1) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
+  background-position: 38% 98%
+}
+
+.card-item:nth-of-type(2) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
+  background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
+  background-position: 46% 95%;
+}
+.card-item:nth-of-type(3) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
+  background-position: 44% 76%;
+}
+.card-item:nth-of-type(4) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
+  background-position: 54.95% 88%;
+}
+
+/* 下方壓暗 */
+.card-item .bg-dark{ background:linear-gradient(to top, rgba(26, 15, 6, 1) 0%,rgba(26, 15, 6, 0.88) 50%,rgba(31, 17, 6, 0.3) 85%,rgba(31, 17, 6, 0) 100%);
+  position:absolute; inset:0;
+  transition:transform 0.5s;
+  transform:translateY(30%);
+}
+.card-item .border{ box-shadow: inset 0px 2px 0px var(--main-color),
+inset 0px -2px 0px var(--main-color),
+0px 2px 0px var(--main-color),
+0px 2px 0px var(--main-color);
+  transition:box-shadow 0.5s;
+  position:absolute; inset:0; z-index:1;
+
+}
+.card-item .focus-border{ box-shadow: inset 0px 0px 0px rgba(181, 162, 138, 0),
+inset 1px 0px 0px rgba(255, 255, 255, 0.15),
+inset -1px 0px 0px rgba(255, 255, 255, 0.15);
+  opacity:1; transition:box-shadow 0.5s,filter;
+  position:absolute; inset:0; z-index:5;
+}
+
+.card-item .focus-color{ opacity:1; transition:background-color ;
+  background-color:rgba(210, 99, 0, 0);
+  position:absolute; inset:0; z-index:1;
+}
+
+.deco-bt{ width:17px; aspect-ratio:1 / 1;
+  bottom:-8px;
+  left:50%;
+  position:absolute; z-index:5;
+  transition:border 0.5s;
+  pointer-events:none;
+}
+.deco-bt.deco01{ border-left:1.5px solid var(--main-color);
+  border-top:1.5px solid var(--main-color);
+  transform:translateX(-74%) rotate(45deg);
+}
+.deco-bt.deco02{ transform:translateX(-18%) rotate(45deg); /* 向右偏移 */
+  border-left:1.5px solid var(--main-color);
+  border-top:1.5px solid var(--main-color);
+}
+@media (max-width:600px) {
+
+  .deco-bt{ bottom:min(-0.5vw, -8.5px);
+    width:min(4.9vw, 17px);
+  }
+
+}
+/* focus */
+ul.card-list:has(li:hover) li:hover{ justify-content:center; margin-inline:min(1.85vw, 0.7rem); transform:scale(1.06); filter:drop-shadow(0px 0px 20px var(--drop-shadow-focus)) brightness(1.1); cursor:pointer; z-index:5;}
+ul.card-list:has(li:hover) li:hover h2{ margin-bottom:0rem; color:rgba(255, 255, 255, 1); transform:translateY(0%); filter:drop-shadow(0px 0px 5px var(--drop-shadow-focus)) drop-shadow(0px 0px 10px var(--drop-shadow-focus)) ;}
+ul.card-list:has(li:hover) li:hover .card-item-con{ grid-template-rows:1fr; opacity:1; position:relative; pointer-events: none; }
+ul.card-list:has(li:hover) li:hover .card-item-con > div{  padding-bottom:var(--margin-hidden);}
+ul.card-list:has(li:hover) li:hover p{ transform:translateY(0%); opacity:1; filter:drop-shadow(0px 0px 5px var(--drop-shadow-focus)); }
+ul.card-list:has(li:hover) li:hover button{ transform:translateY(0%); opacity:1; filter:drop-shadow(0px 0px 3px var(--drop-shadow-focus)) drop-shadow(0px 0px 8px var(--drop-shadow-focus)); border:1px solid rgba(255, 255, 255, 1);}
+ul.card-list:has(li:hover) li:hover .bg{ filter:brightness(0.9) contrast(130%);}
+ul.card-list:has(li:hover) li:hover .bg-dark{ transform:translateY(17%);}
+ul.card-list:has(li:hover) li:hover .focus-border{ opacity:1; filter:brightness(1.3);
+  box-shadow: inset 0px  0px 80px rgba(181, 162, 138, 0),
+  inset 1px 0px 0px var(--main-color-focus),
+  inset -1px 0px 0px var(--main-color-focus);
+  background-color:transparent;
+}
+ul.card-list:has(li:hover) li:hover .focus-color{ background-color:rgba(210, 99, 0, 0.05);}
+
+
+
+/* Glowing effect styles */
+.card-item.glow-active {
+  animation: card-glow 1.5s infinite alternate;
+  filter: drop-shadow(0 0 20px var(--drop-shadow-focus)) brightness(1.2);
+  position: relative;
+  z-index: 10;
+}
+
+.card-item.glow-active .focus-border {
+  box-shadow:
+    inset 0 0 40px rgba(181, 162, 138, 0.8),
+    inset 1px 0 0 var(--main-color-focus),
+    inset -1px 0 0 var(--main-color-focus);
+}
+
+.card-item.glow-active .focus-color {
+  background-color: rgba(210, 99, 0, 0.25);
+}
+
+@keyframes card-glow {
+  0% {
+    box-shadow: 0 0 15px rgba(181, 162, 138, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(181, 162, 138, 1);
+  }
+}
+/* out */
+ul.card-list:has(li:hover) li:not(:hover){ margin-inline:min(0.6vw, 0.18rem); filter:grayscale(65%) brightness(0.92) blur(0px); transform:scale(0.98);
+  transform-origin:center;
+}
+ul.card-list:has(li:hover) li:not(:hover) h2{ opacity:0.55;}
+ul.card-list:has(li:hover) li:not(:hover) .bg{ filter:brightness(0.85) contrast(105%) hue-rotate(10deg);}
+ul.card-list:has(li:hover) li:not(:hover) .border{ --main-color:var(--main-color-out);}
+ul.card-list:has(li:hover) li:not(:hover) .deco-bt{ --main-color:var(--main-color-out);}
+
+article{ margin:0 auto; padding-block:min(8vw, 3rem);
+  display:flex; flex-direction:column; place-content:center;
+}
+
+body{ background-color:#000; }
+*{ -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;}
+
+
+/* Main modal adjustments */
+.modal-dialog.modal-dialog-centered {
+  max-width: 90%;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-list {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialog.modal-dialog-centered {
+    max-width: 95%;
+  }
+}
+

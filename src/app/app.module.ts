@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AddPackComponent } from './packs_subs/components/add-pack/add-pack.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AllSubsComponent } from './packs_subs/components/all-subs/all-subs.component';
+import { SubscribersComponent } from './packs_subs/components/subscribers/subscribers.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SidebarComponent,
     AllPacksComponent,
     AddPackComponent,
+    AllSubsComponent,
+    SubscribersComponent,
 
 
   ],

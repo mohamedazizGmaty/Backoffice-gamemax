@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PacksService } from '../../services/packs.service';
 import { Router } from '@angular/router';
@@ -9,23 +9,51 @@ import { PackForm } from '../../models/pack-form.model';
   templateUrl: './add-pack.component.html',
   styleUrls: ['./add-pack.component.css']
 })
-export class AddPackComponent {
-  packForm: FormGroup;
+export class AddPackComponent implements OnInit {
+
+  packForm: FormGroup = this.fb.group({
+    packName: ['', [Validators.required, Validators.maxLength(100)]],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    availableDate: [this.getFormattedDate(new Date()), Validators.required],
+    expirationDate: ['', Validators.required],
+    selectedGames: [[]]
+  });
   isLoading = false;
   errorMessage = '';
+  games: any[] = [];
+  todayDate: string;
 
   constructor(
     private fb: FormBuilder,
     private packService: PacksService,
-    private router: Router
+    private router: Router,
   ) {
+    this.todayDate = this.getFormattedDate(new Date());
+    this.initializeForm();
+  }
+
+  ngOnInit(): void {
+    this.loadGames();
+  }
+
+  private initializeForm(): void {
     this.packForm = this.fb.group({
       packName: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      availableDate: ['', Validators.required],
-      expirationDate: ['', Validators.required]
+      availableDate: [this.todayDate, Validators.required],
+      expirationDate: ['', Validators.required],
+      selectedGames: [[]]
     });
   }
+
+  private loadGames(): void {
+    this.packService.getGames().subscribe({
+      next: (data) => this.games = data,
+      error: (err) => console.error('Error loading games', err)
+    });
+  }
+
+
 
   onSubmit(): void {
     if (this.packForm.invalid) {
@@ -40,13 +68,14 @@ export class AddPackComponent {
       packName: this.packForm.value.packName,
       description: this.packForm.value.description,
       availableDate: this.formatDateForAPI(this.packForm.value.availableDate),
-      expirationDate: this.formatDateForAPI(this.packForm.value.expirationDate)
+      expirationDate: this.formatDateForAPI(this.packForm.value.expirationDate),
+     // gameIds: this.packForm.value.selectedGames
     };
 
     this.packService.savePack(formData).subscribe({
       next: () => {
         this.isLoading = false;
-        this.router.navigate(['/allPacks']); // Redirige vers la liste des packs après création
+        this.router.navigate(['/allPacks']);
       },
       error: (err) => {
         this.isLoading = false;
@@ -54,6 +83,10 @@ export class AddPackComponent {
         console.error('Error saving pack:', err);
       }
     });
+  }
+
+  private getFormattedDate(date: Date): string {
+    return date.toISOString().split('T')[0]; // YYYY-MM-DD format
   }
 
   private formatDateForAPI(date: string): string {
