@@ -1,0 +1,87 @@
+<p>add-pack works!</p>
+<nav class="mb-2" aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a routerLink="/packs">Liste des Packs</a></li>
+    <li class="breadcrumb-item active">Créer un Pack</li>
+  </ol>
+</nav>
+
+<h2 class="mb-4">Créer un nouveau Pack</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger mb-4">
+  {{ errorMessage }}
+</div>
+
+<div class="row">
+  <div class="col-xl-9">
+    <form [formGroup]="packForm" (ngSubmit)="onSubmit()" class="row g-3 mb-6">
+      <!-- Nom du pack -->
+      <div class="col-12">
+        <div class="form-floating">
+          <input class="form-control" id="packName" type="text"
+                 formControlName="packName"
+                 [ngClass]="{ 'is-invalid': packForm.get('packName')?.invalid && packForm.get('packName')?.touched }">
+          <label for="packName">Nom du Pack</label>
+          <div *ngIf="packForm.get('packName')?.invalid && packForm.get('packName')?.touched" class="invalid-feedback">
+            Le nom du pack est requis (max 100 caractères)
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-12">
+        <div class="form-floating">
+          <textarea class="form-control" id="description"
+                    formControlName="description"
+                    style="height: 100px"
+                    [ngClass]="{ 'is-invalid': packForm.get('description')?.invalid && packForm.get('description')?.touched }"></textarea>
+          <label for="description">Description</label>
+          <div *ngIf="packForm.get('description')?.invalid && packForm.get('description')?.touched" class="invalid-feedback">
+            La description est requise (max 500 caractères)
+          </div>
+        </div>
+      </div>
+
+      <!-- Date de disponibilité -->
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input class="form-control" id="availableDate" type="date"
+                 formControlName="availableDate"
+                 [ngClass]="{ 'is-invalid': packForm.get('availableDate')?.invalid && packForm.get('availableDate')?.touched }">
+          <label for="availableDate">Date de disponibilité</label>
+          <div *ngIf="packForm.get('availableDate')?.invalid && packForm.get('availableDate')?.touched" class="invalid-feedback">
+            La date de disponibilité est requise
+          </div>
+        </div>
+      </div>
+
+      <!-- Date d'expiration -->
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input class="form-control" id="expirationDate" type="date"
+                 formControlName="expirationDate"
+                 [ngClass]="{ 'is-invalid': packForm.get('expirationDate')?.invalid && packForm.get('expirationDate')?.touched }">
+          <label for="expirationDate">Date d'expiration</label>
+          <div *ngIf="packForm.get('expirationDate')?.invalid && packForm.get('expirationDate')?.touched" class="invalid-feedback">
+            La date d'expiration est requise et doit être après la date de disponibilité
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <div class="col-12 gy-6">
+        <div class="row g-3 justify-content-end">
+          <div class="col-auto">
+            <button type="button" class="btn btn-phoenix-primary px-5" [routerLink]="['/allPacks']">Annuler</button>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary px-5 px-sm-15" [disabled]="isLoading || packForm.invalid">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ isLoading ? 'Création en cours...' : 'Créer le Pack' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,162 @@
+<div class="content">
+  <nav class="mb-2" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a href="#!">Page 1</a></li>
+      <li class="breadcrumb-item"><a href="#!">Page 2</a></li>
+      <li class="breadcrumb-item active">Default</li>
+    </ol>
+  </nav>
+
+  <div class="mb-9">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && user">
+      <!-- Title and Buttons -->
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="mb-0">Customer details</h2>
+        <div class="d-flex gap-2 flex-wrap">
+          <button 
+  class="btn btn-phoenix-danger" 
+  [routerLink]="['/banuser', user.userId]"
+  routerLinkActive="active"
+  *ngIf="!user.isBanned">
+  <span class="fa-solid fa-trash-can me-2"></span>Ban customer
+</button>
+<button 
+class="btn btn-phoenix-warning" 
+[routerLink]="['/unbanuser', user.userId]"
+*ngIf="user.isBanned">
+<span class="fas fa-user-check me-2"></span>Unban customer
+</button>
+        </div>
+      </div>
+
+      <!-- Flex Container for Customer Info & Address -->
+      <div class="d-flex flex-wrap gap-4 mb-5">
+        <!-- Customer Info Card -->
+        <div class="card flex-grow-1" style="min-width: 300px;">
+          <div class="card-body d-flex flex-column justify-content-between pb-3">
+            <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
+              <div class="col-12 col-sm-auto mb-sm-2">
+                <div class="avatar avatar-5xl">
+                  <img class="rounded-circle" [src]="user.profilePictureUrl " alt="" />
+                </div>
+              </div>
+              <div class="col-12 col-sm-auto flex-1">
+                <h3>{{user.username }}</h3>
+                <p class="text-body-secondary">Joined {{formatJoinDate(user.accountCreationDate) }}</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between border-top border-dashed pt-4 text-center text-sm-start">
+              <div>
+                <h6>Age</h6>
+                <p class="fs-7 text-body-secondary mb-0">{{user.age}}</p>
+              </div>
+              <div>
+                <h6>User ID</h6>
+                <p class="fs-7 text-body-secondary mb-0">{{user.userId || '3'}}</p>
+              </div>
+              <div>
+                <h6>Status</h6>
+                <p class="fs-7 text-body-secondary mb-0" [ngClass]="{'text-success': !user.isBanned, 'text-danger': user.isBanned}">
+                  {{user.isBanned ? 'Banned' : 'Active'}}
+                  <span *ngIf="user.isBanned && user.banEndDate">(until {{user.banEndDate | date:'shortDate'}})</span>
+                  <span *ngIf="user.isBanned && !user.banEndDate">(Permanent)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default Address Card -->
+        <div class="card flex-grow-1" style="min-width: 300px;">
+          <div class="card-body pb-3">
+            <div class="d-flex align-items-center mb-3">
+              <h3 class="me-1">Default Address</h3>
+              <button class="btn btn-link p-0">
+                <span class="fas fa-pen fs-8 ms-3 text-body-quaternary"></span>
+              </button>
+            </div>
+            <h5 class="text-body-secondary">Full Name</h5>
+            <p class="text-body-secondary">{{user.fullName}}<br />{{user.lastName}}<br />{{user.username}}</p>
+            <div class="mb-3">
+              <h5 class="text-body-secondary">Email</h5>
+              <a [href]="'mailto:' + user.email">{{user.email}}</a>
+            </div>
+            <h5 class="text-body-secondary">Birthday</h5>
+            <p class="text-body-secondary">{{user.birthday}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ban History Section -->
+      <div class="card mb-4" *ngIf="user.isBanned || banHistory.length">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">Ban History</h3>
+            <button class="btn btn-link" (click)="toggleBanHistory()">
+              {{ showBanHistory ? 'Hide' : 'Show' }} history
+            </button>
+          </div>
+          
+          <div *ngIf="showBanHistory">
+            <div *ngIf="banHistory.length === 0" class="text-center py-3">
+              <p class="text-body-secondary">No ban history found</p>
+            </div>
+            
+            <div *ngIf="banHistory.length > 0" class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Ban Date</th>
+                    <th>Reason</th>
+                    <th>Unban Date</th>
+                    <th>Unban Reason</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let history of banHistory">
+                    <td>{{ history.banDate | date:'shortDate' }}</td>
+                    <td>{{ history.reason || '-' }}</td>
+                    <td>{{ history.unbanDate ? (history.unbanDate | date:'shortDate') : '-' }}</td>
+                    <td>{{ history.unbanReason || '-' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="mb-4">Notes on Customer</h3>
+          <textarea class="form-control mb-3" rows="4"></textarea>
+          <button class="btn btn-phoenix-primary w-100 mb-4">Add Note</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer position-absolute">
+    <div class="row g-0 justify-content-between align-items-center h-100">
+      <div class="col-12 col-sm-auto text-center">
+        <p class="mb-0 mt-2 mt-sm-0 text-body">
+          Thank you for creating with Phoenix
+          <span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />
+          2023 &copy;<a class="mx-1" href="https://themewagon.com/">Themewagon</a>
+        </p>
+      </div>
+      <div class="col-12 col-sm-auto text-center">
+        <p class="mb-0 text-body-tertiary text-opacity-85">v1.14.0</p>
+      </div>
+    </div>
+  </footer>
+</div>
