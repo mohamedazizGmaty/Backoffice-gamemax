@@ -67,27 +67,17 @@
 
 }
 
+.card-item .bg {
+  background-repeat: no-repeat;
+  background-size: auto 127%;
+  filter: brightness(1) contrast(105%);
+  transition: filter 1s, background-size 1s;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-position: center;
+}
 
-.card-item .bg{ background-repeat:no-repeat;
-  background-size:auto 127%;
-  filter:brightness(1) contrast(105%);
-  transition:filter 1s, background-size 1s;
-  position:absolute; inset:0; z-index:-1;
-}
-.card-item:nth-of-type(1) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
-  background-position: 38% 98%
-}
-
-.card-item:nth-of-type(2) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
-  background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
-  background-position: 46% 95%;
-}
-.card-item:nth-of-type(3) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
-  background-position: 44% 76%;
-}
-.card-item:nth-of-type(4) .bg{ background-image:url(https://images.deepai.org/art-image/236a98372322441b89f3143fffb57768/create-a-dynamic-and-visually-engaging-promotional-po.jpg);
-  background-position: 54.95% 88%;
-}
 
 /* 下方壓暗 */
 .card-item .bg-dark{ background:linear-gradient(to top, rgba(26, 15, 6, 1) 0%,rgba(26, 15, 6, 0.88) 50%,rgba(31, 17, 6, 0.3) 85%,rgba(31, 17, 6, 0) 100%);

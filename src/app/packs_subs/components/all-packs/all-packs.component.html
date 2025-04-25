@@ -236,9 +236,13 @@
     <div class="col-12 col-sm-auto">
       <div class="d-flex align-items-center">
         <div class="search-box me-3">
-          <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search" type="search" placeholder="Search projects" aria-label="Search" />
+            <input class="form-control search-input search"
+                   type="search"
+                   [(ngModel)]="searchTerm"
+                   (input)="onSearchChange()"
+                   placeholder="Search by name..."
+                   aria-label="Search">
             <span class="fas fa-search search-box-icon"></span>
-          </form>
         </div><a class="btn btn-phoenix-primary px-3 me-1" href="project-list-view.html" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="List view"><span class="fa-solid fa-list fs-10"></span></a><a class="btn btn-phoenix-primary px-3 me-1" href="project-board-view.html" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Board view"><svg width="9" height="9" viewbox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0.5C0 0.223857 0.223858 0 0.5 0H1.83333C2.10948 0 2.33333 0.223858 2.33333 0.5V1.83333C2.33333 2.10948 2.10948 2.33333 1.83333 2.33333H0.5C0.223857 2.33333 0 2.10948 0 1.83333V0.5Z" fill="currentColor"></path>
             <path d="M3.33333 0.5C3.33333 0.223857 3.55719 0 3.83333 0H5.16667C5.44281 0 5.66667 0.223858 5.66667 0.5V1.83333C5.66667 2.10948 5.44281 2.33333 5.16667 2.33333H3.83333C3.55719 2.33333 3.33333 2.10948 3.33333 1.83333V0.5Z" fill="currentColor"></path>
@@ -269,7 +273,7 @@
   {{ errorMessage }}
 </div>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3 mb-9">
-    <div class="col" *ngFor="let pack of packs">
+    <div class="col" *ngFor="let pack of filteredPacks">
       <div class="card h-100 hover-actions-trigger">
         <div class="card-body">
           <div class="d-flex align-items-center">
@@ -342,7 +346,7 @@
                 (click)="closeModal()">
           <span class="fa-solid fa-xmark text-body"></span>
         </button>
-        <img class="w-100" src="../../assets/img/generic/43.png" alt="" style="max-height: 200px;min-height: 150px;" />
+        <img class="w-100" src="http://localhost:8094{{ selectedPack.image.imageUrl }}" alt="" style="max-height: 200px; min-height: 200px;" />
       </div>
 
       <div class="modal-body p-5 px-md-6">
@@ -411,55 +415,18 @@
                 <div class="mb-3">
                   <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top">
                     <div class="col-12">
-                      <div data-todo-offcanvas-toogle="data-todo-offcanvas-toogle" data-todo-offcanvas-target="todoOffcanvas-1">
-                        <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1"><input class="form-check-input flex-shrink-0 form-check-line-through mt-0 me-2 form-check-input-undefined" type="checkbox" id="checkbox-todo-0"><label class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">Designing the dungeon</label><span class="badge badge-phoenix fs-10 ms-auto badge-phoenix-primary">DRAFT</span></div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="d-flex ms-4 lh-1 align-items-center"><button class="btn p-0 text-body-tertiary fs-10 me-2"><svg class="svg-inline--fa fa-paperclip me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M364.2 83.8C339.8 59.39 300.2 59.39 275.8 83.8L91.8 267.8C49.71 309.9 49.71 378.1 91.8 420.2C133.9 462.3 202.1 462.3 244.2 420.2L396.2 268.2C407.1 257.3 424.9 257.3 435.8 268.2C446.7 279.1 446.7 296.9 435.8 307.8L283.8 459.8C219.8 523.8 116.2 523.8 52.2 459.8C-11.75 395.8-11.75 292.2 52.2 228.2L236.2 44.2C282.5-2.08 357.5-2.08 403.8 44.2C450.1 90.48 450.1 165.5 403.8 211.8L227.8 387.8C199.2 416.4 152.8 416.4 124.2 387.8C95.59 359.2 95.59 312.8 124.2 284.2L268.2 140.2C279.1 129.3 296.9 129.3 307.8 140.2C318.7 151.1 318.7 168.9 307.8 179.8L163.8 323.8C157.1 330.5 157.1 341.5 163.8 348.2C170.5 354.9 181.5 354.9 188.2 348.2L364.2 172.2C388.6 147.8 388.6 108.2 364.2 83.8V83.8z"></path></svg><!-- <span class="fas fa-paperclip me-1"></span> Font Awesome fontawesome.com -->2</button>
-                        <p class="text-body-tertiary fs-10 mb-md-0 me-2 mb-0">12 Nov, 2021</p>
-                        <p class="text-body-tertiary fs-10 fw-bold mb-md-0 mb-0">12:00 PM</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="px-3 py-2" *ngFor="let game of selectedPack.packGames">
-                    <p>{{game.gameId}}</p>
-
-                  </div>
-
-                  <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top border-bottom">
-                    <div class="col-12">
-                      <div data-todo-offcanvas-toogle="data-todo-offcanvas-toogle" data-todo-offcanvas-target="todoOffcanvas-9">
-                        <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1"><input class="form-check-input flex-shrink-0 form-check-line-through mt-0 me-2 form-check-input-undefined" type="checkbox" id="checkbox-todo-8"><label class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-8">Make ready for release</label></div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="d-flex ms-4 lh-1 align-items-center"><button class="btn p-0 text-body-tertiary fs-10 me-2"><svg class="svg-inline--fa fa-paperclip me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M364.2 83.8C339.8 59.39 300.2 59.39 275.8 83.8L91.8 267.8C49.71 309.9 49.71 378.1 91.8 420.2C133.9 462.3 202.1 462.3 244.2 420.2L396.2 268.2C407.1 257.3 424.9 257.3 435.8 268.2C446.7 279.1 446.7 296.9 435.8 307.8L283.8 459.8C219.8 523.8 116.2 523.8 52.2 459.8C-11.75 395.8-11.75 292.2 52.2 228.2L236.2 44.2C282.5-2.08 357.5-2.08 403.8 44.2C450.1 90.48 450.1 165.5 403.8 211.8L227.8 387.8C199.2 416.4 152.8 416.4 124.2 387.8C95.59 359.2 95.59 312.8 124.2 284.2L268.2 140.2C279.1 129.3 296.9 129.3 307.8 140.2C318.7 151.1 318.7 168.9 307.8 179.8L163.8 323.8C157.1 330.5 157.1 341.5 163.8 348.2C170.5 354.9 181.5 354.9 188.2 348.2L364.2 172.2C388.6 147.8 388.6 108.2 364.2 83.8V83.8z"></path></svg><!-- <span class="fas fa-paperclip me-1"></span> Font Awesome fontawesome.com -->2</button>
-                        <p class="text-body-tertiary fs-10 mb-md-0 me-2 mb-0">2o Nov, 2021</p>
-                        <p class="text-body-tertiary fs-10 fw-bold mb-md-0 mb-0">1:00 AM</p>
+                      <div data-todo-offcanvas-toogle="data-todo-offcanvas-toogle" data-todo-offcanvas-target="todoOffcanvas-1"  *ngFor="let game of selectedPack.packGames">
+                        <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1">
+                          <input class="form-check-input flex-shrink-0 form-check-line-through mt-0 me-2 form-check-input-undefined" type="checkbox" id="checkbox-todo-0">
+                          <label class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">{{ getGameName(game.gameId) }}
+                          </label>
+                          <span class="badge badge-phoenix fs-10 ms-auto badge-phoenix-primary">DRAFT</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <a class="fw-bold fs-9 mt-4" href="#!"><svg class="svg-inline--fa fa-plus me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path></svg><!-- <span class="fas fa-plus me-1"></span> Font Awesome fontawesome.com -->Add new task</a>
-                <div class="dropdown d-inline-block mb-3">
-                  <button
-                    class="btn btn-phoenix-secondary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Select Games
-                  </button>
-
-                  <div class="dropdown-menu dropdown-menu-end py-0" style="max-height: 300px; overflow-y: auto;">
-
-                    <div class="dropdown-divider my-1"></div>
-                    <div class="px-3 pb-2 text-muted small">
-                      <!--            Selected: {{ packForm.value.selectedGames.length }}-->
-                    </div>
-                  </div>
-                </div>
-
+                <a class="fw-bold fs-9 mt-4" href="#!"><svg class="svg-inline--fa fa-plus me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path></svg> Save Games </a>
               </div>
             </div>
           </div>

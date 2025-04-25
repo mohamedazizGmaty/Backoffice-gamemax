@@ -1,0 +1,105 @@
+<div class="admin-container">
+    <header class="admin-header">
+      <h1><i class="fas fa-tools"></i> Gestion des Réclamations</h1>
+      <div class="admin-actions">
+        <button class="refresh-btn" (click)="loadRecs()">
+          <i class="fas fa-sync-alt"></i> Actualiser
+        </button>
+      </div>
+    </header>
+  
+    <!-- Filtres -->
+    <section class="filters-section">
+      <div class="filter-group">
+        <label for="clientFilter"><i class="fas fa-user"></i> Client</label>
+        <input type="text" id="clientFilter" [(ngModel)]="filterClient" placeholder="Nom du client">
+      </div>
+  
+      <div class="filter-group">
+        <label for="typeFilter"><i class="fas fa-tag"></i> Type</label>
+        <input type="text" id="typeFilter" [(ngModel)]="filterType" placeholder="Type de réclamation">
+      </div>
+  
+      <div class="filter-group">
+        <label for="statusFilter"><i class="fas fa-info-circle"></i> Statut</label>
+        <select id="statusFilter" [(ngModel)]="selectedStatus">
+          <option value="">Tous les statuts</option>
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+  
+      <div class="filter-group">
+        <label for="dateFilter"><i class="fas fa-calendar"></i> Date</label>
+        <input type="date" id="dateFilter" [(ngModel)]="filterDate">
+      </div>
+  
+      <div class="filter-actions">
+        <button class="apply-btn" (click)="applyFilters()">
+          <i class="fas fa-filter"></i> Appliquer
+        </button>
+        <button class="reset-btn" (click)="resetFilters()">
+          <i class="fas fa-undo"></i> Réinitialiser
+        </button>
+      </div>
+    </section>
+  
+    <!-- Messages d'état -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <span>Chargement en cours...</span>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-state">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+      <button class="close-btn" (click)="errorMessage = ''">&times;</button>
+    </div>
+  
+    <!-- Tableau des réclamations -->
+    <div class="reclamations-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Email</th>
+            <th>Titre</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rec of filteredRecs">
+            <td>{{ rec.id_rec }}</td>
+            <td>{{ rec.client }}</td>
+            <td>{{ rec.email }}</td>
+            <td class="title-cell">{{ rec.title }}</td>
+            <td>{{ rec.typeRec }}</td>
+            <td>{{ rec.dateCreation | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(rec.status)">
+                {{ rec.status }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <select class="status-select" [value]="rec.status" 
+                      (change)="updateRecStatus(rec, $any($event.target).value)">
+                <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+              </select>
+              <button class="delete-btn" (click)="deleteRec(rec.id_rec)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredRecs.length === 0 && !isLoading">
+            <td colspan="8" class="no-results">
+              <i class="fas fa-inbox"></i>
+              <span>Aucune réclamation trouvée</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

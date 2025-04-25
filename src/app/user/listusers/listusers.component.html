@@ -1,0 +1,119 @@
+<div class="content">
+    <div class="members-header-section blurred-bg" >
+      <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="#!">Pages</a></li>
+          <li class="breadcrumb-item active">Members</li>
+        </ol>
+      </nav>
+      <h2 class="text-bold text-body-emphasis mb-4 text-white">Members</h2>
+  
+      <div *ngIf="isLoading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+  
+      <div *ngIf="!isLoading" id="members" data-list='{"valueNames":["id","username","customer","email","joined"],"page":10,"pagination":true}'>
+        <!-- Header tools -->
+        <div class="row align-items-center justify-content-between g-3 mb-3">
+          <div class="col col-auto">
+            <div class="search-box">
+              <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                <input class="form-control search-input search" type="search" placeholder="Search members" aria-label="Search" [(ngModel)]="searchText" />
+                <span class="fas fa-search search-box-icon"></span>
+              </form>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-link text-white me-3 px-0">
+                <span class="fa-solid fa-file-export fs-9 me-2"></span>Export
+              </button>
+              <button class="btn btn-light">
+                <span class="fas fa-plus me-2"></span>Add member
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!isLoading" id="members" data-list='{"valueNames":["id","username","customer","email","joined"],"page":10,"pagination":true}'>
+      <!-- Table with compact layout -->
+      <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-4 bg-body-emphasis border-y mt-2 position-relative top-1">
+        <div class="table-responsive scrollbar ms-n1 ps-1">
+          <table class="table table-sm fs-9 mb-0">
+            <thead>
+              <tr>
+                <th class="align-middle ps-0 pe-1" style="width: 30px;">
+                  <div class="form-check mb-0 fs-8">
+                    <input class="form-check-input" id="checkbox-bulk-members-select" type="checkbox" />
+                  </div>
+                </th>
+                <th class="text-start" style="width: 50px;">Photo</th>
+                <th class="sort text-start" data-sort="username" style="width:120px;">Username</th>
+                <th class="sort text-start" data-sort="id" style="width:60px;">ID</th>
+                <th class="sort text-start" data-sort="customer" style="width:150px;">Full Name</th>
+                <th class="sort text-start" data-sort="email" style="width:180px;">Email</th>
+                <th class="sort text-start" data-sort="joined" style="width:100px;">Joined</th>
+                <th class="text-end" style="width: 100px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="list" id="members-table-body">
+              <tr *ngFor="let user of filteredUsers" class="hover-actions-trigger btn-reveal-trigger position-static">
+                <!-- Checkbox -->
+                <td class="align-middle ps-0 pe-1 py-1">
+                  <div class="form-check mb-0 fs-8">
+                    <input class="form-check-input" type="checkbox" [attr.data-id]="user.userId" />
+                  </div>
+                </td>
+  
+                <!-- Profile Picture -->
+                <td class="align-middle pe-1 py-1">
+                  <div class="avatar avatar-m">
+                    <img class="rounded-circle" [src]="user.profilePictureUrl || '../assets/img/team/avatar.webp'" alt="" />
+                  </div>
+                </td>
+  
+                <!-- Username -->
+                <td class="username align-middle ps-0 py-1">
+                  <a class="fw-semibold text-primary cursor-pointer" 
+                  (click)="navigateToUserDetails(user.username)">
+                 {{ user.username }}
+               </a>
+                </td>
+  
+                <!-- Other columns -->
+                <td class="id align-middle py-1">{{ user.userId }}</td>
+                <td class="customer align-middle py-1">{{ user.fullName }}</td>
+                <td class="email align-middle py-1">
+                  <a class="fw-semibold text-truncate d-block" [href]="'mailto:' + user.email">{{ user.email }}</a>
+                </td>
+                <td class="joined align-middle py-1">{{ formatDate(user.accountCreationDate) }}</td>
+                <td class="align-middle text-end py-1 pe-0">
+                  <a class="btn btn-sm btn-outline-secondary" 
+     [routerLink]="['/userdetails', user.username]"> <!-- Modifié ici -->
+    <span class="fas fa-eye me-1"></span>Details
+  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <!-- Pagination -->
+        <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+          <div class="col-auto d-flex">
+            <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body">{{ users.length }} members</p>
+          </div>
+          <div class="col-auto d-flex">
+            <button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+            <ul class="mb-0 pagination"></ul>
+            <button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

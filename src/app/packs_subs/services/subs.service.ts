@@ -32,14 +32,15 @@ export class SubssService {
       throw new Error('Pack ID is required');
     }
 
-    return this.http.post(`${this.apiUrl}/assignPack/${SubId}/${packId}`,packId);
+    return this.http.post(`http://localhost:8080/api/packs/assignPack/${SubId}/${packId}`,packId);
   }
+
   unassignPack(packId: number,SubId:number): Observable<any> {
     if (!packId) {
       throw new Error('Pack ID is required');
     }
 
-    return this.http.post(`${this.apiUrl}/unassignPack/${SubId}/${packId}`,packId);
+    return this.http.post(`http://localhost:8080/api/packs/unassignPack/${SubId}/${packId}`,packId);
   }
 
 

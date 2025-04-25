@@ -14,6 +14,52 @@
 
 <div class="row">
   <div class="col-xl-9">
+    <!-- Game Selection Section -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Sélection des Jeux</h5>
+        <div class="mb-3">
+          <label class="form-label">Jeux disponibles</label>
+
+          <select class="form-select" aria-label="Default select example">
+            <option selected="">Open this select menu</option>
+            <option  *ngFor="let pack of games"  >
+              {{pack.gameName}}
+            </option>
+
+          </select>
+
+          <select #gameSelect class="form-select" multiple
+                  (change)="updateSelectedGames($event)">
+            <option *ngFor="let game of games"
+                    [value]="game.gameName"
+                    [selected]="selectedGamesNames.includes(game.gameName)">
+              {{game.gameName}}
+            </option>
+          </select>
+
+          <!-- Display selected games -->
+          <div *ngIf="selectedGamesNames.length > 0" class="mt-2">
+            <h6>Selected Games:</h6>
+            <div class="d-flex flex-wrap gap-2">
+    <span *ngFor="let game of selectedGamesNames" class="badge bg-primary">
+      {{game}}
+      <button class="btn-close btn-close-white ms-2" (click)="removeGame(game)"></button>
+    </span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline-primary"
+                (click)="generatePackInfo()">
+
+          <span *ngIf="isGenerating" class="spinner-border spinner-border-sm me-2"></span>
+          Générer avec l'IA
+        </button>
+      </div>
+    </div>
+
+    <!-- Pack Creation Form -->
     <form [formGroup]="packForm" (ngSubmit)="onSubmit()" class="row g-3 mb-6">
       <!-- Nom du pack -->
       <div class="col-12">
@@ -28,6 +74,12 @@
         </div>
       </div>
 
+      <select  class="form-select">
+        <option *ngFor="let cat of categories"
+                [value]="cat.categorieId">
+          {{cat.nom}}
+        </option>
+      </select>
       <!-- Description -->
       <div class="col-12">
         <div class="form-floating">
@@ -70,7 +122,12 @@
         </div>
       </div>
 
+      <!-- Image du Pack -->
+      <div class="col-12">
 
+
+      </div>
+      <input type="file" (change)="onFileSelected($event)">
       <!-- Boutons -->
       <div class="col-12 gy-6">
         <div class="row g-3 justify-content-end">

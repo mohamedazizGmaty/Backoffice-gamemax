@@ -1,0 +1,97 @@
+<div class="container mt-4">
+  <button (click)="goBack()" class="btn btn-outline-secondary mb-4">
+    <i class="fas fa-arrow-left me-2"></i>Retour
+  </button>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="!banResult?.success; else resultView">
+        <h2 class="card-title mb-4">Bannir l'utilisateur #{{ userId }}</h2>
+
+        <form (ngSubmit)="submitBan()" class="ban-form">
+          <div class="form-group mb-3">
+            <label class="form-label text-white">Raison du bannissement</label>
+            <select [(ngModel)]="banData.reason" name="reason" required class="form-control">
+              <option value="" disabled selected>Sélectionnez une raison</option>
+              <option *ngFor="let reason of reasons" [value]="reason">{{ reason }}</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label text-white">Durée du bannissement</label>
+            <select [(ngModel)]="banData.duration" name="duration" required class="form-control">
+              <option *ngFor="let duration of durations" [value]="duration.value">{{ duration.label }}</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-4">
+            <label class="form-label text-white">Commentaire (optionnel)</label>
+            <textarea [(ngModel)]="banData.comment" name="comment" rows="3" class="form-control"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-danger" [disabled]="isLoading || !banData.reason || !banData.duration">
+              <span *ngIf="!isLoading">Confirmer le bannissement</span>
+              <span *ngIf="isLoading">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Traitement...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <ng-template #resultView>
+        <div class="result-container text-center">
+          <div class="result-icon mb-3">
+            <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+          </div>
+          <h3 class="mb-4">Bannissement confirmé</h3>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-body text-start">
+              <ul class="list-group list-group-flush">
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-user me-2 text-muted"></i>ID Utilisateur:</span>
+                  <span class="fw-bold">{{ banResult!.userId }}</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-exclamation-triangle me-2 text-danger"></i>Raison:</span>
+                  <span class="fw-bold">{{ banResult!.reason }}</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="banResult!.banEndDate; else permanentBan">
+                  <span><i class="far fa-calendar-times me-2 text-info"></i>Fin du bannissement:</span>
+                  <span class="fw-bold">{{ banResult!.banEndDate | date:'dd/MM/yyyy à HH:mm' }}</span>
+                </li>
+
+                <ng-template #permanentBan>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-ban me-2 text-danger"></i>Type:</span>
+                    <span class="badge bg-danger fs-6">Permanent</span>
+                  </li>
+                </ng-template>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><i class="far fa-envelope me-2 text-muted"></i>Email envoyé:</span>
+                  <span *ngIf="banResult!.emailSent" class="badge bg-success">Oui</span>
+                  <span *ngIf="!banResult!.emailSent" class="badge bg-warning text-dark">Non</span>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <button (click)="resetForm()" class="btn btn-primary mt-3">
+            <i class="fas fa-redo me-2"></i>Effectuer un nouveau bannissement
+          </button>
+          <button (click)="goBack()" class="btn btn-outline-secondary mt-3 ms-2">
+            <i class="fas fa-arrow-left me-2"></i>Retour
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

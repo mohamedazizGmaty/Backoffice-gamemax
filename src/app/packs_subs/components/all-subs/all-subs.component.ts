@@ -1,4 +1,4 @@
-import { Component,  ChangeDetectorRef, NgZone } from '@angular/core';
+import {Component, ChangeDetectorRef, NgZone, OnInit, OnDestroy} from '@angular/core';
 import {Pack} from "../../models/pack.model";
 import { PacksService } from '../../services/packs.service';
 import {SubssService} from "../../services/subs.service";
@@ -9,12 +9,13 @@ import {SubssService} from "../../services/subs.service";
   templateUrl: './all-subs.component.html',
   styleUrls: ['./all-subs.component.css']
 })
-export class AllSubsComponent {
+export class AllSubsComponent implements OnInit {
 
-  packs: Pack[] = [];
+  packs: any[] = [];
   basicPacks: any[] = [];
   standardPacks: any[] = [];
-  premiumPacks: any[] = [];  isLoading = false;
+  premiumPacks: any[] = [];
+  isLoading = false;
   selectedPackId: number | null = null;
   showModal = false;
   selectedSubId: number | null = null;
@@ -46,6 +47,7 @@ export class AllSubsComponent {
   }
   ngOnInit(): void {
     this.loadAllPacks();
+
     this.loadPacks();
   }
   unassignPack(packId: number,SubId:number): void{
@@ -99,11 +101,12 @@ export class AllSubsComponent {
   loadAllPacks(): void {
     this.isLoading = true;
 
-    // Load Basic Packs (e.g., planId = 1)
     this.packService.getPacksbyPlan(2).subscribe({
       next: (packs) => {
+        console.log('Pack assigned successfully:', packs);
         this.basicPacks = packs;
         this.isLoading = false;
+        console.log(this.basicPacks);
       },
       error: (err) => {
         console.error('Error loading basic packs:', err);
@@ -111,7 +114,6 @@ export class AllSubsComponent {
       }
     });
 
-    // Load Standard Packs (e.g., planId = 2)
     this.packService.getPacksbyPlan(1).subscribe({
       next: (packs) => {
         this.standardPacks = packs;
@@ -125,6 +127,7 @@ export class AllSubsComponent {
     this.packService.getPacksbyPlan(3).subscribe({
       next: (packs) => {
         this.premiumPacks = packs;
+        console.log(this.premiumPacks);
       },
       error: (err) => {
         console.error('Error loading premium packs:', err);
@@ -181,7 +184,28 @@ export class AllSubsComponent {
   }
   selectPack(packId: number) {
     this.selectedPackId = this.selectedPackId === packId ? null : packId;
-
+    this.loadAllPacks();
     this.updateGlowEffect();
   }
+
+  getPositionStyle(index: number): string {
+    switch (index) {
+      case 0: return '38% 98%';
+      case 1: return '46% 95%';
+      case 2: return '44% 76%';
+      case 3: return '54.95% 88%';
+      default: return 'center center';
+    }
+  }
+  getBgPosition(index: number): string {
+    const positions = [
+      '38% 98%',
+      '46% 95%',
+      '44% 76%',
+      '54.95% 88%'
+      // Add more positions if you have more cards
+    ];
+    return positions[index] || 'center'; // Fallback
+  }
+
 }
