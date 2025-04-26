@@ -1,0 +1,77 @@
+<div class="mb-9">
+  <div class="row g-2 mb-4">
+    <div class="col-auto">
+      <h2 class="mb-0">Coupons</h2>
+    </div>
+  </div>
+  <div id="products"
+       data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'>
+
+
+    <div class="mb-5 d-flex align-items-center">
+      <input class="form-control me-2" id="gameName" type="text"
+             placeholder="Choose a game"
+             [value]="generatedCode"
+             #gameInput
+             readonly
+             style="width: 350px;"
+      >
+      <button class="btn btn-phoenix-primary me-5" type="button" style="width: 120px" (click)="onGenerateClick()">
+        Generate
+      </button>
+      <select class="form-select me-5" aria-label="Default select example" style="width: 500px;" #discountSelect>
+        <option selected="" value="">Choose a discount</option>
+        <option value="5">5%</option>
+        <option value="10">10%</option>
+        <option value="15">15%</option>
+        <option value="20">20%</option>
+      </select>
+      <button class="btn btn-primary" type="button" (click)="onCreateCoupon(gameInput, discountSelect)">Create coupon</button>
+    </div>
+
+
+    <div
+      class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+      <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+        <table class="table table-sm fs-9 mb-0">
+          <thead>
+          <tr>
+            <th class="text-center align-middle" style="width: 25%; height: 20px;">CODE</th>
+            <th class="text-center align-middle" style="width: 25%; height: 20px;">DISCOUNT</th>
+            <th class="text-center align-middle" style="width: 25%; height: 20px;">AVAILABLE</th>
+            <th class="text-center align-middle" style="width: 25%; height: 20px;">USED</th>
+          </tr>
+          </thead>
+          <tbody class="list" id="customers-table-body">
+          <tr *ngFor="let coupon of coupons" class="hover-actions-trigger btn-reveal-trigger position-static"
+              style="height: 50px;">
+            <td class="text-center align-middle" style="padding: 15px 0;">
+              <p class="mb-0 text-body-emphasis fw-bold">{{ coupon.couponCode }}</p>
+            </td>
+            <td class="text-center align-middle" style="padding: 15px 0;">
+              <p class="mb-0 text-body-emphasis fw-bold">{{ coupon.discount }}%</p>
+            </td>
+            <td class="text-center align-middle" style="padding: 15px 0;">
+                <span *ngIf="coupon.available === 1" class="badge badge-phoenix fs-10 badge-phoenix-success">
+                  Available
+                </span>
+              <span *ngIf="coupon.available === 0" class="badge badge-phoenix fs-10 badge-phoenix-danger">
+                  Not available
+                </span>
+            </td>
+            <td class="text-center align-middle" style="padding: 15px 0;">
+                <span *ngIf="coupon.used === 1" class="badge badge-phoenix fs-10 badge-phoenix-success">
+                  Not used
+                </span>
+              <span *ngIf="coupon.used === 0" class="badge badge-phoenix fs-10 badge-phoenix-danger">
+                  Used
+                </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="row gx-6 gy-3 mb-4 align-items-center">
+  <div class="col-auto">
+    <h2 class="mb-0">Marketplace<span class="fw-normal text-body-tertiary ms-3">({{articles.length}})</span></h2>
+  </div>
+  <div class="col-auto"><a class="btn btn-primary px-5" href="/addArticle"><i
+    class="fa-solid fa-plus me-2"></i>Add new article</a></div>
+</div>
+<div class="row justify-content-between align-items-end mb-4 g-3">
+  <div class="col-12 col-sm-auto">
+    <ul class="nav nav-links mx-n2">
+      <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" href="#"><span>All</span><span
+        class="text-body-tertiary fw-semibold">(32)</span></a></li>
+      <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Ongoing</span><span
+        class="text-body-tertiary fw-semibold">(14)</span></a></li>
+      <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Cancelled</span><span
+        class="text-body-tertiary fw-semibold">(2)</span></a></li>
+      <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Finished</span><span
+        class="text-body-tertiary fw-semibold">(14)</span></a></li>
+      <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Postponed</span><span
+        class="text-body-tertiary fw-semibold">(2)</span></a></li>
+    </ul>
+  </div>
+  <div class="col-12 col-sm-auto">
+    <div class="d-flex align-items-center">
+      <div class="search-box me-3">
+        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+          <input
+            class="form-control search-input search"
+            type="search"
+            placeholder="Search projects"
+            aria-label="Search"
+            (input)="searchArticles($event)"
+          />
+          <span class="fas fa-search search-box-icon"></span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-lg-12 col-xxl-10">
+  <div class="row gx-1 gy-6 mb-8">
+
+    <div *ngFor="let article of filteredArticles" class="col-12 col-sm-7 col-md-4 col-xxl-2">
+      <div class="product-card-container h-100">
+        <div class="position-relative text-decoration-none product-card h-100">
+
+          <div class="d-flex flex-column justify-content-between h-100">
+            <div>
+              <div class="border border-1 border-translucent rounded-3 position-relative mb-3"
+                   style="height: 220px; overflow: hidden;">
+
+
+
+
+
+                <img class="img-fluid w-100 h-100" [src]=" baseUrl + article.game.imageUrls[article.game.imageUrls.length - 1]" alt=""
+                     style="object-fit: cover;"/>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <a class="stretched-link" href="/articleDetail/{{ article.articleId }}">
+                  <h4 class="mb-2 lh-sm line-clamp-3 product-name m-0">{{ article.game.gameName }}</h4>
+                </a>
+                <div class="text-end">
+                  <h4 class="text-body-emphasis m-0">${{ article.price }}</h4>
+                </div>
+              </div>
+              <p class="fs-9" style="margin-top: -7px">{{article.game.publisher}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
