@@ -27,6 +27,12 @@ import { BanuserComponent } from './user/banuser/banuser.component';
 import { UnbanuserComponent } from './user/unban-user/unban-user.component';
 import { DahsboardUserComponent } from './user/dahsboard-user/dahsboard-user.component';
 
+import { AddGameComponent } from './games/components/add-game/add-game.component';
+import { GameListComponent } from './games/components/game-list/game-list.component';
+import { MarketplaceComponent } from './games/components/marketplace/marketplace.component';
+import { AddArticleComponent } from './games/components/add-article/add-article.component';
+import { ArticleDetailsComponent } from './games/components/article-details/article-details.component';
+import { CouponComponent } from './games/components/coupon/coupon.component';
 
 import { FaqComponent } from './support/faq/faq.component';
 
@@ -51,6 +57,13 @@ import { FaqComponent } from './support/faq/faq.component';
     BanuserComponent,
     UnbanuserComponent,
     DahsboardUserComponent,
+
+    AddGameComponent,
+    GameListComponent,
+    MarketplaceComponent,
+    AddArticleComponent,
+    ArticleDetailsComponent,
+    CouponComponent,
 
     FaqComponent,
 

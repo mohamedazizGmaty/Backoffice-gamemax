@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/",
             "outputPath": "dist/backoffice",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -25,9 +26,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/dropzone/dist/dropzone.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/dropzone/dist/dropzone-min.js"
+            ]
           },
           "configurations": {
             "production": {

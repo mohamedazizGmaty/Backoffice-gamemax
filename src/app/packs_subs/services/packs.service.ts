@@ -13,12 +13,11 @@ import { throwError } from 'rxjs';
 })
 export class PacksService {
 
-  private apiUrl = 'http://localhost:8080/api/packs/allPacks';
-  private apiUrl_ = 'http://localhost:8080/api/packs';
-  private apiUrl_games = 'http://localhost:8080/api/packs/games';
-  private apiUrl_Categories = 'http://localhost:8080/api/packs/getAllCategories';
+  private apiUrl = 'http://26.3.30.155:8080/api/packs';
+  private apiUrl_games = 'http://26.3.30.155:8080/api/packs';
+  private apiUrl_Categories = 'http://26.3.30.155:8080/api/packs/getAllCategories';
 
-  private apiUrl_Ai = 'http://localhost:8094/api/generate-pack';
+  private apiUrl_Ai = 'http://26.3.30.155:8094/api/generate-pack';
 
   private pack: any;
 
@@ -29,32 +28,32 @@ export class PacksService {
   constructor(private http: HttpClient) {}
 
   getAllPacks(): Observable<Pack[]> {
-    return this.http.get<Pack[]>(this.apiUrl);
+    return this.http.get<Pack[]>(`${this.apiUrl}/allPacks`);
   }
 
   getPacksbyPlan(planId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:8080/api/packs/by-plan/${planId}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/by-plan/${planId}`).pipe(
       map(packs => packs)
     );
   }
 
   savePack(formData: FormData,categorie :number): Observable<any> {
-    return this.http.post(`${this.apiUrl_}/savePack?categorieId=${categorie}`, formData);
+    return this.http.post(`${this.apiUrl}/savePack?categorieId=${categorie}`, formData);
   }
 
   updatePack(packData: Pack): Observable<Pack> {
     console.log(packData.packId);
-    return this.http.put<Pack>(`${this.apiUrl_}/updatePack/${packData.packId}`, packData);
+    return this.http.put<Pack>(`${this.apiUrl}/updatePack/${packData.packId}`, packData);
   }
   deletePack(packId: number): Observable<any> {
     if (!packId) {
       throw new Error('Pack ID is required');
     }
-    return this.http.delete(`${this.apiUrl_}/deletePack/${packId}`);
+    return this.http.delete(`${this.apiUrl}/deletePack/${packId}`);
   }
 
   getGames(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl_games).pipe(
+    return this.http.get<any[]>(`${this.apiUrl_games}/games`).pipe(
       catchError(error => {
         console.error('Error fetching games:', error);
         return throwError(() => new Error('Failed to load games'));

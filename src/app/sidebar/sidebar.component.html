@@ -48,37 +48,59 @@
             </div>
           </div>
 
-            <div class="nav-item-wrapper">
-              <a class="nav-link dropdown-indicator label-1" href="#nv-project-management" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-project-management">
+
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-event" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-event">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="message-square"></span></span><span class="nav-link-text">Help Center</span>
+                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="cloud"></span></span><span class="nav-link-text">Cloud</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-project-management">
-                  <li class="collapsed-nav-item-title d-none">Project management</li>
-                  <li class="nav-item">
-                    <a class="nav-link"  [routerLink]="['/faq']"
-                       routerLinkActive="active"
-                       [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">FAQ</span></div>
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-event">
+                  <li class="collapsed-nav-item-title d-none">Admin</li>
+                  <li class="nav-item"><a class="nav-link"
+                                          [routerLink]="['/listusers']"
+                                          routerLinkActive="active"
+                                          [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="d-flex align-items-center"><span class="nav-link-text">Games</span></div>
                   </a><!-- more inner pages-->
                   </li>
-
+                  <li class="nav-item"><a class="nav-link"
+                                          [routerLink]="['/dashboarduser']"
+                                          routerLinkActive="active"
+                                          [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="d-flex align-items-center"><span class="nav-link-text"> Flavors </span></div>
+                  </a><!-- more inner pages-->
+                  </li>
                 </ul>
               </div>
-            </div><!-- parent pages-->
+            </div>
 
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-CRM" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-CRM">
+
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1"
+                                             [routerLink]="['/games']"
+                                             routerLinkActive="active"
+                                             [routerLinkActiveOptions]="{ exact: true }"  role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-kanban">
                 <div class="d-flex align-items-center">
-                  <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="shopping-bag"></span></span><span class="nav-link-text">Marketplace</span><span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>
+                  <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="play"></span></span><span class="nav-link-text">Games</span><span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>
                 </div>
               </a>
               <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-CRM">
-                  <li class="collapsed-nav-item-title d-none">CRM</li>
-                  <li class="nav-item"><a class="nav-link" href="apps/crm/analytics.html" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-text">Analytics</span></div>
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-kanba">
+                  <li class="collapsed-nav-item-title d-none">Kanban</li>
+                  <li class="nav-item">
+                    <a class="nav-link"
+                       [routerLink]="['/games']"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }"       >
+                      <div class="d-flex align-items-center"><span class="nav-link-text">Games</span></div>
+                    </a><!-- more inner pages-->
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"
+                       [routerLink]="['/addGame']"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }"       >
+                      <div class="d-flex align-items-center"><span class="nav-link-text">Games</span></div>
                     </a><!-- more inner pages-->
                   </li>
 
@@ -86,51 +108,35 @@
               </div>
             </div>
 
-
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-kanban" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-kanban">
-                <div class="d-flex align-items-center">
-                  <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="trello"></span></span><span class="nav-link-text">Games</span><span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>
-                </div>
-              </a>
-              <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-kanban">
-                  <li class="collapsed-nav-item-title d-none">Kanban</li>
-                  <li class="nav-item"><a class="nav-link" href="apps/kanban/kanban.html" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-text">Kanban</span></div>
-                    </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="apps/kanban/boards.html" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-text">Boards</span><span class="badge ms-2 badge badge-phoenix badge-phoenix-info ">New</span></div>
-                    </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="apps/kanban/create-kanban-board.html" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-text">Create board</span></div>
-                    </a><!-- more inner pages-->
-                  </li>
-                </ul>
+            <div class="nav-item-wrapper">  <a class="nav-link dropdown-indicator label-1"
+                                               href="#nv-CRM" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-CRM">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="shopping-bag"></span></span><span class="nav-link-text">Marketplace</span><span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>
               </div>
-            </div><!-- parent pages-->
-
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-social" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-social">
-                <div class="d-flex align-items-center">
-                  <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="share-2"></span></span><span class="nav-link-text">Community Service</span>
-                </div>
-              </a>
+            </a>
               <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-social">
-                  <li class="collapsed-nav-item-title d-none">Social</li>
-                  <li class="nav-item"><a class="nav-link" href="apps/social/profile.html" data-bs-toggle="" aria-expanded="false">
-                      <div class="d-flex align-items-center"><span class="nav-link-text">Profile</span></div>
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-CRM">
+                  <li class="nav-item">
+                    <a class="nav-link"
+                       [routerLink]="['/marketplace']"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }">
+                      <div class="d-flex align-items-center"><span class="nav-link-text">Marketplace</span></div>
+                    </a><!-- more inner pages-->
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"
+                       [routerLink]="['/coupon']"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }"       >
+                      <div class="d-flex align-items-center"><span class="nav-link-text">Coupons</span></div>
                     </a><!-- more inner pages-->
                   </li>
 
                 </ul>
               </div>
-            </div><!-- parent pages-->
+            </div>
 
-          </li>
-          <li class="nav-item">
-            <!-- parent pages-->
             <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-home" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-home">
               <div class="d-flex align-items-center">
                 <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="layers"></span></span><span class="nav-link-text">Subscription and Pack</span>
@@ -158,10 +164,10 @@
                        routerLinkActive="active"
                        [routerLinkActiveOptions]="{ exact: true }"
                     >
-                    <div class="d-flex align-items-center">
-                      <span class="nav-link-text">Subs</span>
-                    </div>
-                  </a>
+                      <div class="d-flex align-items-center">
+                        <span class="nav-link-text">Subs</span>
+                      </div>
+                    </a>
                   </li>
                   <li class="nav-item"><a
                     class="nav-link"
@@ -176,7 +182,48 @@
                 </ul>
               </div>
             </div>
+
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-social" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-social">
+                <div class="d-flex align-items-center">
+                  <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="share-2"></span></span><span class="nav-link-text">Community Service</span>
+                </div>
+              </a>
+              <div class="parent-wrapper label-1">
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-social">
+                  <li class="collapsed-nav-item-title d-none">Social</li>
+                  <li class="nav-item"><a class="nav-link" href="apps/social/profile.html" data-bs-toggle="" aria-expanded="false">
+                      <div class="d-flex align-items-center"><span class="nav-link-text">Profile</span></div>
+                    </a><!-- more inner pages-->
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+
           </li>
+            <!-- parent pages-->
+
+          <div class="nav-item-wrapper">
+            <a class="nav-link dropdown-indicator label-1" href="#nv-project-management" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-project-management">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><span data-feather="message-square"></span></span><span class="nav-link-text">Help Center</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-project-management">
+                <li class="collapsed-nav-item-title d-none">Project management</li>
+                <li class="nav-item">
+                  <a class="nav-link"  [routerLink]="['/faq']"
+                     routerLinkActive="active"
+                     [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="d-flex align-items-center"><span class="nav-link-text">FAQ</span></div>
+                  </a><!-- more inner pages-->
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
 
 
         </ul>

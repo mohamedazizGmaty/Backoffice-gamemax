@@ -12,8 +12,8 @@ import {Subscription} from "../models/subscription";
 })
 export class SubssService {
 
-  private apiUrl = 'http://localhost:8080/api/packs/';
- private apiUrlSub= 'http://localhost:8080/api/subscriptions'
+  private apiUrl = 'http://26.3.30.155:8080/api/packs/';
+ private apiUrlSub= 'http://26.3.30.155:8080/api/subscriptions'
 
 
 
@@ -32,7 +32,7 @@ export class SubssService {
       throw new Error('Pack ID is required');
     }
 
-    return this.http.post(`http://localhost:8080/api/packs/assignPack/${SubId}/${packId}`,packId);
+    return this.http.post(`${this.apiUrl}assignPack/${SubId}/${packId}`,packId);
   }
 
   unassignPack(packId: number,SubId:number): Observable<any> {
@@ -40,7 +40,7 @@ export class SubssService {
       throw new Error('Pack ID is required');
     }
 
-    return this.http.post(`http://localhost:8080/api/packs/unassignPack/${SubId}/${packId}`,packId);
+    return this.http.post(`${this.apiUrl}unassignPack/${SubId}/${packId}`,packId);
   }
 
 
