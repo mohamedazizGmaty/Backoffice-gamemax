@@ -1,0 +1,38 @@
+{
+    "language": {
+      "english": "English",
+      "french": "French"
+    },
+    "postTitle": "Post Title",
+    "whatsOnYourMind": "What's on your mind?",
+    "visibility": {
+      "public": "Public",
+      "private": "Private",
+      "draft": "Draft"
+    },
+    "submit": "Post",
+    "searchPost": "Search a post...",
+    "community": "Community",
+    "noCommunity": "No Community",
+    "deletePost": "Delete Post",
+    "shareInstagram": "Share on Instagram",
+    "shareTwitter": "Share on Twitter",
+    "downloadImage": "Download Image",
+    "downloadAsPDF": "Download as PDF",
+    "reportAbuse": "Report Abuse",
+    "shareFacebook": "Share on Facebook",
+    "checkThisOut": "Check this out!",
+    "imageURL": "Image URL",
+    "abuseReportSubject": "Abuse Report",
+    "abuseReportBody": "Hello, I would like to report abuse regarding this post. Thank you.",
+    
+      
+        
+            "writeSomething": "Write something...",
+            "addComment": "Add a comment...",
+            "send": "Send"
+          
+          
+      }
+      
+  

@@ -1,0 +1,9 @@
+<div class="chat-container">
+    <input [(ngModel)]="userMessage" placeholder="Pose ta question..." />
+    <button (click)="send()">Envoyer</button>
+  
+    <div *ngIf="botReply">
+      <strong>Gemini :</strong> {{ botReply }}
+    </div>
+  </div>
+  

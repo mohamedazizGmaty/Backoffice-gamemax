@@ -23,6 +23,7 @@ import {MarketplaceComponent} from "./games/components/marketplace/marketplace.c
 import {AddArticleComponent} from "./games/components/add-article/add-article.component";
 import {ArticleDetailsComponent} from "./games/components/article-details/article-details.component";
 import {CouponComponent} from "./games/components/coupon/coupon.component";
+import { ListPostsComponent } from './community/list-posts/list-posts.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,12 @@ const routes: Routes = [
   {path:'addArticle', component: AddArticleComponent},
   {path:'articleDetail/:id', component: ArticleDetailsComponent},
   {path:'coupon', component: CouponComponent},
+
+
+  { path: 'posts', component:ListPostsComponent },
+
+
+
 ];
 
 @NgModule({

@@ -1,0 +1,34 @@
+{
+    "language": {
+      "english": "Anglais",
+      "french": "Français"
+    },
+    "postTitle": "Titre du post",
+    "whatsOnYourMind": "Que voulez-vous partager ?",
+    "visibility": {
+      "public": "Public",
+      "private": "Privé",
+      "draft": "Brouillon"
+    },
+    "submit": "Publier",
+    "searchPost": "Rechercher un post...",
+    "community": "Communauté",
+    "noCommunity": "Pas de Communauté",
+    "deletePost": "Supprimer le post",
+    "shareInstagram": "Partager sur Instagram",
+    "shareTwitter": "Partager sur Twitter",
+    "downloadImage": "Télécharger l'image",
+    "downloadAsPDF": "Télécharger en PDF",
+    "reportAbuse": "Signaler un abus",
+    "shareFacebook": "Partager sur Facebook",
+    "checkThisOut": "Regardez ça !",
+    "imageURL": "URL de l'image",
+    "abuseReportSubject": "Signalement d'abus",
+    "abuseReportBody": "Bonjour, je souhaite signaler un abus concernant ce post. Merci.",
+
+    "writeSomething": "Écrivez quelque chose...",
+    "addComment": "Ajouter un commentaire...",
+    "send": "Envoyer"
+
+  }
+  

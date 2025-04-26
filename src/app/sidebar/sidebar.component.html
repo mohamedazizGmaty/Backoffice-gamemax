@@ -191,7 +191,11 @@
               <div class="parent-wrapper label-1">
                 <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-social">
                   <li class="collapsed-nav-item-title d-none">Social</li>
-                  <li class="nav-item"><a class="nav-link" href="apps/social/profile.html" data-bs-toggle="" aria-expanded="false">
+                  <li class="nav-item">
+                    <a class="nav-link"  [routerLink]="['/posts']"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }"
+                       data-bs-toggle="" aria-expanded="false">
                       <div class="d-flex align-items-center"><span class="nav-link-text">Profile</span></div>
                     </a><!-- more inner pages-->
                   </li>

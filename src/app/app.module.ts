@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeadersComponent } from './headers/headers.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { AllPacksComponent } from './packs_subs/components/all-packs/all-packs.component';
 import { FormsModule } from '@angular/forms';
 import {CommonModule, DatePipe} from '@angular/common';
@@ -36,6 +36,16 @@ import { CouponComponent } from './games/components/coupon/coupon.component';
 
 import { FaqComponent } from './support/faq/faq.component';
 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AiChatbotComponent } from './community/ai-chatbot/ai-chatbot.component';
+import { ChatbotComponent } from './community/chatbot/chatbot.component';
+import { ListPostsComponent } from './community/list-posts/list-posts.component';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  // Chemin vers tes fichiers de traduction
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +77,10 @@ import { FaqComponent } from './support/faq/faq.component';
 
     FaqComponent,
 
+    AiChatbotComponent,
+    ChatbotComponent,
+    ListPostsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -76,8 +90,14 @@ import { FaqComponent } from './support/faq/faq.component';
     ReactiveFormsModule,
     CommonModule,
 
-
-
+    // Configuration de ngx-translate
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [AuthenticationService , UserService],
   bootstrap: [AppComponent]
