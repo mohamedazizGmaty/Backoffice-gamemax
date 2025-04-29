@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {environment} from "../../enviroment/env";
 
 @Component({
   selector: 'app-chatbot',
@@ -13,7 +14,7 @@ export class ChatbotComponent {
   constructor(private http: HttpClient) {}
 
   send() {
-    this.http.post<any>('http://localhost:8080/api/community/chat', { message: this.userMessage })
+    this.http.post<any>(`${environment.apiUrl}/community/chat`, { message: this.userMessage })
       .subscribe(res => {
         this.botReply = res.reply;
       });

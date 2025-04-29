@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { formatDate } from '@angular/common';
+import {environment} from "../../enviroment/env";
 
 interface UserSummary {
   isBanned: any;
@@ -55,8 +56,8 @@ interface UnbanResponse {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/api/user';
-  private apiUrl = 'http://localhost:8080/api/admin';
+  private baseUrl = `${environment.apiUrl}/user`;
+  private apiUrl =  `${environment.apiUrl}/admin`;
 
 
   constructor(private http: HttpClient) {}
@@ -85,7 +86,7 @@ isAdmin(userId: number): Observable<boolean> {
     return [
       "Comportement toxique ou langage offensant",
       "Usurpation d'identité ou fausse information",
-      "Exploitation de bugs ou failles du jeu", 
+      "Exploitation de bugs ou failles du jeu",
       "Spam ou messages répétitifs"
     ];
   }
@@ -105,7 +106,7 @@ isAdmin(userId: number): Observable<boolean> {
     }
     return this.http.post<UnbanResponse>(`${this.apiUrl}/unban/${userId}`, {}, { params });
   }
-  
+
   getBanHistory(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/ban-history/${userId}`);
   }
@@ -113,7 +114,7 @@ isAdmin(userId: number): Observable<boolean> {
     return this.http.get<number>(`${this.baseUrl}/usernames/count`);
   }
   countNewUsersLastWeek(): Observable<number> {
-   
+
     return this.http.get<number>(`${this.baseUrl}/count/new-last-week`);
   }
   getUsersWithStatus(): Observable<{active: number, banned: number}> {
@@ -127,7 +128,7 @@ isAdmin(userId: number): Observable<boolean> {
     );
   }
   getNewCustomersGrowthPercentage(): Observable<number> {
-  
+
     return this.http.get<number>(`${this.baseUrl}/new-customers/growth-percentage`);
   }
 

@@ -1,105 +1,173 @@
 <div class="admin-container">
-    <header class="admin-header">
+  <header class="admin-header">
       <h1><i class="fas fa-tools"></i> Gestion des Réclamations</h1>
       <div class="admin-actions">
-        <button class="refresh-btn" (click)="loadRecs()">
-          <i class="fas fa-sync-alt"></i> Actualiser
-        </button>
+          <!-- Button calls loadInitialRecs from the component -->
+          <button class="refresh-btn" (click)="loadInitialRecs()" title="Actualiser la liste">
+              <i class="fas fa-sync-alt"></i> Actualiser
+          </button>
       </div>
-    </header>
-  
-    <!-- Filtres -->
-    <section class="filters-section">
+  </header>
+
+  <!-- Filtres -->
+  <section class="filters-section">
       <div class="filter-group">
-        <label for="clientFilter"><i class="fas fa-user"></i> Client</label>
-        <input type="text" id="clientFilter" [(ngModel)]="filterClient" placeholder="Nom du client">
+          <!-- Client ID Filter -->
+          <label for="clientIdFilter"><i class="fas fa-id-badge"></i> ID Client</label>
+          <input type="text" id="clientIdFilter" [(ngModel)]="filterClientId" placeholder="ID du client">
       </div>
-  
+
       <div class="filter-group">
-        <label for="typeFilter"><i class="fas fa-tag"></i> Type</label>
-        <input type="text" id="typeFilter" [(ngModel)]="filterType" placeholder="Type de réclamation">
+          <!-- Type Filter - UPDATED OPTIONS -->
+          <label for="typeFilter"><i class="fas fa-tag"></i> Type</label>
+          <select id="typeFilter" [(ngModel)]="filterTypeRec">
+              <option value="">Tous les types</option>
+              <option value="TECHNIQUE">Technique</option>
+              <option value="PAIEMENT">Paiement</option>
+              <option value="AUTRE">Autre</option>
+          </select>
       </div>
-  
+
       <div class="filter-group">
-        <label for="statusFilter"><i class="fas fa-info-circle"></i> Statut</label>
-        <select id="statusFilter" [(ngModel)]="selectedStatus">
-          <option value="">Tous les statuts</option>
-          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
-        </select>
+           <!-- Status Filter -->
+          <label for="statusFilter"><i class="fas fa-info-circle"></i> Statut</label>
+          <select id="statusFilter" [(ngModel)]="filterStatus">
+              <option value="">Tous les statuts</option>
+              <!-- Populated from statuses array in component -->
+              <option *ngFor="let s of statuses" [value]="s">{{ s | titlecase }}</option>
+          </select>
       </div>
-  
+
       <div class="filter-group">
-        <label for="dateFilter"><i class="fas fa-calendar"></i> Date</label>
-        <input type="date" id="dateFilter" [(ngModel)]="filterDate">
+           <!-- Date Filter -->
+          <label for="dateFilter"><i class="fas fa-calendar-alt"></i> Date</label>
+          <input type="date" id="dateFilter" [(ngModel)]="filterDate">
       </div>
-  
+
       <div class="filter-actions">
-        <button class="apply-btn" (click)="applyFilters()">
-          <i class="fas fa-filter"></i> Appliquer
-        </button>
-        <button class="reset-btn" (click)="resetFilters()">
-          <i class="fas fa-undo"></i> Réinitialiser
-        </button>
+          <!-- Filter Action Buttons -->
+          <button class="apply-btn" (click)="applyFilters()" title="Appliquer les filtres">
+              <i class="fas fa-filter"></i> Appliquer
+          </button>
+          <button class="reset-btn" (click)="resetFilters()" title="Réinitialiser les filtres">
+              <i class="fas fa-undo"></i> Réinitialiser
+          </button>
       </div>
-    </section>
-  
-    <!-- Messages d'état -->
-    <div *ngIf="isLoading" class="loading-state">
+  </section>
+
+  <!-- Messages d'état global (Loading/Error for list) -->
+  <div *ngIf="isLoading && !isLoadingPreview" class="loading-state">
       <div class="spinner"></div>
-      <span>Chargement en cours...</span>
-    </div>
-  
-    <div *ngIf="errorMessage" class="error-state">
-      <i class="fas fa-exclamation-triangle"></i>
-      <span>{{ errorMessage }}</span>
-      <button class="close-btn" (click)="errorMessage = ''">&times;</button>
-    </div>
-  
-    <!-- Tableau des réclamations -->
-    <div class="reclamations-table">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Client</th>
-            <th>Email</th>
-            <th>Titre</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let rec of filteredRecs">
-            <td>{{ rec.id_rec }}</td>
-            <td>{{ rec.client }}</td>
-            <td>{{ rec.email }}</td>
-            <td class="title-cell">{{ rec.title }}</td>
-            <td>{{ rec.typeRec }}</td>
-            <td>{{ rec.dateCreation | date:'dd/MM/yyyy' }}</td>
-            <td>
-              <span class="status-badge" [ngClass]="getStatusClass(rec.status)">
-                {{ rec.status }}
-              </span>
-            </td>
-            <td class="actions-cell">
-              <select class="status-select" [value]="rec.status" 
-                      (change)="updateRecStatus(rec, $any($event.target).value)">
-                <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
-              </select>
-              <button class="delete-btn" (click)="deleteRec(rec.id_rec)">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
-          <tr *ngIf="filteredRecs.length === 0 && !isLoading">
-            <td colspan="8" class="no-results">
-              <i class="fas fa-inbox"></i>
-              <span>Aucune réclamation trouvée</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <span>Chargement des réclamations...</span>
   </div>
+
+  <div *ngIf="errorMessage" class="error-state alert alert-danger">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span> {{ errorMessage }}</span>
+      <button type="button" class="close-btn" (click)="errorMessage = ''" aria-label="Close" title="Fermer l'alerte">×</button>
+  </div>
+
+  <!-- Tableau des réclamations -->
+  <div class="reclamations-table-wrapper">
+      <div class="reclamations-table">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>ID Client</th>
+                      <th>Description</th>
+                      <th>Type</th>
+                      <th>Pièce(s) jointe(s)</th>
+                      <th>Date Création</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Loop through filtered reclamations -->
+                  <tr *ngFor="let rec of filteredRecs">
+                      <td>{{ rec.id_rec }}</td>
+                      <td>{{ rec.clientId }}</td>
+                      <td class="description-cell" title="{{rec.description}}">
+                          {{ rec.description | slice:0:70 }}{{ rec.description.length > 70 ? '...' : '' }}
+                      </td>
+                       <!-- Display TypeRec using titlecase for better reading -->
+                      <td>{{ rec.typeRec | titlecase }}</td>
+
+                      <!-- Attachment Column -->
+                      <td class="attachment-cell">
+                          <ng-container *ngIf="rec.attachments && rec.attachments.length > 0; else noAttachment">
+                              <span title="{{ getAttachmentFilename(rec) }}">
+                                  <i class="fas fa-paperclip"></i> {{ getAttachmentFilename(rec) | slice:0:15 }}...
+                              </span>
+                              <button class="preview-btn"
+                                      *ngIf="getAttachmentId(rec) !== undefined"
+                                      (click)="previewFile(getAttachmentId(rec))"
+                                      title="Prévisualiser la pièce jointe">
+                                  <i class="fas fa-eye"></i> Voir
+                              </button>
+                          </ng-container>
+                          <ng-template #noAttachment>
+                              <span>Aucune</span>
+                          </ng-template>
+                      </td>
+
+                      <td>{{ rec.dateCreation | date:'dd/MM/yyyy HH:mm' }}</td>
+                      <td>
+                          <!-- Status Badge -->
+                          <span class="status-badge" [ngClass]="getStatusClass(rec.status)">
+                              {{ rec.status | titlecase }}
+                          </span>
+                      </td>
+                      <td class="actions-cell">
+                          <!-- Status Update Dropdown -->
+                          <select class="status-select" [value]="rec.status"
+                                  (change)="updateRecStatus(rec, $any($event.target).value)"
+                                  title="Changer le statut">
+                              <option *ngFor="let s of statuses" [value]="s">{{ s | titlecase }}</option>
+                          </select>
+                          <!-- Delete Button -->
+                          <button class="delete-btn" (click)="deleteRec(rec.id_rec)" title="Supprimer la réclamation">
+                              <i class="fas fa-trash-alt"></i>
+                          </button>
+                      </td>
+                  </tr>
+                  <!-- Row shown when no results match filters -->
+                  <tr *ngIf="filteredRecs.length === 0 && !isLoading">
+                      <td colspan="8" class="no-results">
+                          <i class="fas fa-inbox"></i>
+                          <span>Aucune réclamation trouvée correspondant à vos critères.</span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+
+  <!-- Attachment Preview Area -->
+  <div class="preview-overlay" *ngIf="previewUrl || isLoadingPreview || previewError">
+      <div class="preview-modal-content" (click)="$event.stopPropagation()">
+          <button class="close-preview-btn" (click)="closePreview()" title="Fermer la prévisualisation">×</button>
+
+          <!-- Loading state for preview -->
+          <div *ngIf="isLoadingPreview" class="loading-state preview-loading">
+              <div class="spinner"></div>
+              <span>Chargement de l'aperçu...</span>
+          </div>
+
+          <!-- Error state for preview -->
+          <div *ngIf="previewError && !isLoadingPreview" class="error-state alert alert-warning">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>{{ previewError }}</span>
+          </div>
+
+          <!-- Preview iframe -->
+          <div *ngIf="previewUrl && !isLoadingPreview && !previewError" class="preview-display">
+              <iframe [src]="previewUrl" frameborder="0"></iframe>
+          </div>
+      </div>
+      <!-- Clicking the overlay backdrop closes the preview -->
+      <div class="preview-overlay-backdrop" (click)="closePreview()"></div>
+  </div>
+
+</div>

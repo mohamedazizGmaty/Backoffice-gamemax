@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core'; // Importation du service de traduction
 import { AuthenticationService} from "../../user/services/auth.service";
 import { UserService } from '../../user/services/user.service';
+import {environment} from "../../enviroment/env";
 
 
 @Component({
@@ -29,6 +30,8 @@ export class ListPostsComponent implements OnInit {
 
   replyingToComment: number | null = null;
   replyContent: string = '';
+  baseUrl: string= environment.apiUrlImg;
+
 
   searchTerm: string = '';
 filteredPosts: any[] = [];
@@ -63,7 +66,7 @@ isAdmin: boolean = false; // À définir selon les droits de l'utilisateur
 
 
 sendToChatbot() {
-  this.http.post<any>('http://localhost:8080/api/community/chat', { message: this.userMessage })
+  this.http.post<any>(`${environment.apiUrl}/community/chat`, { message: this.userMessage })
     .subscribe(
       res => {
         this.botReply = res.reply;
@@ -150,9 +153,11 @@ switchLanguage(language: string) {
     console.log(this.comments)
     this.filteredPosts = this.posts; // au départ on affiche tous les posts
 
+    console.log(this.filteredPosts);
     const userId = 1; // ou n’importe quel id pour test statique
     this.postService.getUserbyId(userId).subscribe(user => {
       this.userData = user;
+      console.log(this.userData);
     });
 
     // this.authService.currentUser.subscribe(user => {
@@ -200,6 +205,7 @@ switchLanguage(language: string) {
 loadPosts(): void {
   this.postService.getPosts().subscribe({
     next: (posts) => {
+
       this.posts = posts.map(post => ({
         ...post,
         reactions: {
@@ -214,7 +220,9 @@ loadPosts(): void {
           total: post.reactions?.total || 0
         }
       }));
+
       this.filteredPosts = [...this.posts];
+      console.log(this.posts);
     }
   });
 }
@@ -488,9 +496,11 @@ downloadPostAsPDF(post: any) {
   // Ajouter les images du post
   post.assets.forEach((asset: any, index: number) => {
     if (asset.type === 'image') {
-      doc.addImage(asset.asset_url, 'JPEG', 10, 30 + (index * 60), 180, 80); // Ajuste la taille et la position
+      console.log(asset);
+      doc.addImage( this.baseUrl + post.assets[0].asset_url, 'JPEG', 10, 30 + (index * 60), 180, 80); // Ajuste la taille et la position
     }
-  });
+  }
+  );
 
   // Télécharger le PDF
   doc.save('post-' + post.postId + '.pdf');

@@ -3,6 +3,8 @@ import { PacksService } from '../../services/packs.service';
 import { Pack } from '../../models/pack.model';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {SubssService} from "../../services/subs.service";
+import {environment} from "../../../enviroment/env";
 
 @Component({
   selector: 'app-all-packs',
@@ -19,6 +21,7 @@ export class AllPacksComponent implements OnInit, OnDestroy {
   isLoading = false;
   deleteLoading = false;
   games: any[] = [];
+  subs: any[] = [];
 
 
   // Edit state
@@ -34,9 +37,12 @@ export class AllPacksComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
+  baseUrl: string= environment.apiUrlImg;
 
   constructor(
-    private packService: PacksService
+    private packService: PacksService,
+    private subService: SubssService,
+
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +120,7 @@ export class AllPacksComponent implements OnInit, OnDestroy {
         this.packs = packs;
         this.filteredPacks = [...this.packs]; // Initialize with all packs
         this.isLoading = false;
+        console.log(packs);
       },
       error: (err) => {
         console.error('Error loading packs:', err);
@@ -269,4 +276,6 @@ export class AllPacksComponent implements OnInit, OnDestroy {
     console.log(this.games)
     return game ? game.gameName : 'Unknown Game';
   }
+
+
 }

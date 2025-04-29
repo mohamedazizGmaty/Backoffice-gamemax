@@ -1,30 +1,31 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import {environment} from "../../enviroment/env";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  private apiUrl = 'http://localhost:8080/api/community/posts';
-  private baseUrl = 'http://localhost:8080/api/community/comments'; // URL de base de votre APa
-  private reactionUrl='http://localhost:8080/api/community/reactions';
-  private apiUrl2 = 'http://localhost:8080/api/user/TDO/'
+  private apiUrl = `${environment.apiUrl}/community/posts`;
+  private baseUrl = `${environment.apiUrl}/community/comments`; // URL de base de votre APa
+  private reactionUrl=`${environment.apiUrl}/community/reactions`;
+  private apiUrl2 = `${environment.apiUrl}/user/TDO/`
 
 
-  
+
   constructor(private http: HttpClient) { }
   createPost(post: any, imageFile?: File): Observable<any> {
     const formData = new FormData();
     formData.append('post', new Blob([JSON.stringify(post)], {
       type: 'application/json'
     }));
-    
+
     if (imageFile) {
       formData.append('file', imageFile);
     }
-  
+
     return this.http.post(this.apiUrl, formData);
   }
 
@@ -77,9 +78,9 @@ getReactionsByPost(postId: number): Observable<any[]> {
 
 
 addComment(
-  postId: number, 
-  userId: number, 
-  content: string, 
+  postId: number,
+  userId: number,
+  content: string,
   parentCommentId?: number
 ): Observable<any> {
   const url = `${this.baseUrl}`; // URL de base sans /add/...
@@ -114,14 +115,14 @@ addComment(
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       }),
-     
+
     });
   }
-  
+
  // Méthode pour obtenir l'URL d'un post
  getPostUrl(postId: number): string {
   return `${this.baseUrl}${postId}`;
-} 
+}
 
 uploadAsset(formData: FormData): Observable<any> {
   return this.http.post(`${this.apiUrl}/upload`, formData, { responseType: 'text' });

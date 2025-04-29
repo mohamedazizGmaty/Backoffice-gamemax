@@ -346,7 +346,7 @@
                 (click)="closeModal()">
           <span class="fa-solid fa-xmark text-body"></span>
         </button>
-        <img class="w-100" src="http://localhost:8080{{ selectedPack.image.imageUrl }}" alt="" style="max-height: 200px; min-height: 200px;" />
+        <img class="w-100"  [src]="baseUrl + '/api'+selectedPack.image.imageUrl" alt="" style="max-height: 200px; min-height: 200px;" />
       </div>
 
       <div class="modal-body p-5 px-md-6">

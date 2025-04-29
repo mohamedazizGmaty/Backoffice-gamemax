@@ -74,12 +74,14 @@
         </div>
       </div>
 
-      <select  class="form-select">
-        <option *ngFor="let cat of categories"
-                [value]="cat.categorieId">
-          {{cat.nom}}
+      <select class="form-select" [(ngModel)]="selectedCategoryId" name="category" [ngModelOptions]="{standalone: true}">
+        <option *ngFor="let cat of categories" [value]="cat.categorieId">
+          {{ cat.nom }}
         </option>
       </select>
+
+
+
       <!-- Description -->
       <div class="col-12">
         <div class="form-floating">
@@ -124,10 +126,12 @@
 
       <!-- Image du Pack -->
       <div class="col-12">
-
+        <div class="container">
+          <button  class="btn btn-outline-primary" (click)="generateImage()">🎨 Générer une image avec l'IA</button>
+        </div>
 
       </div>
-      <input type="file" (change)="onFileSelected($event)">
+      <input  class="btn btn-outline-primary" type="file" (change)="onFileSelected($event)">
       <!-- Boutons -->
       <div class="col-12 gy-6">
         <div class="row g-3 justify-content-end">

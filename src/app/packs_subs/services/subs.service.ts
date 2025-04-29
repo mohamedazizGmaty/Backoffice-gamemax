@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pack } from '../models/pack.model';
 import {Subscription} from "../models/subscription";
+import {environment} from "../../enviroment/env";
 
 
 @Injectable({
@@ -12,8 +13,8 @@ import {Subscription} from "../models/subscription";
 })
 export class SubssService {
 
-  private apiUrl = 'http://26.3.30.155:8080/api/packs/';
- private apiUrlSub= 'http://26.3.30.155:8080/api/subscriptions'
+  private apiUrl = `${environment.apiUrl}/packs/`;
+ private apiUrlSub= `${environment.apiUrl}/subscriptions`;
 
 
 
@@ -21,10 +22,12 @@ export class SubssService {
 
   constructor(private http: HttpClient) {}
 
-  getAllSubs(): Observable<Subscription[]> {
-    return this.http.get<Subscription[]>(`${this.apiUrlSub}/allSubscriptions`).pipe(
-      map(subs => subs.map(sub => new Subscription(sub)))
-    );
+  getAllSubs(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlSub}/allSubscriptions`);
+  }
+
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrlSub}/users`);
   }
 
   assignPack(packId: number,SubId:number): Observable<any> {

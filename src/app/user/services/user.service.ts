@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { formatDate } from '@angular/common';
+import {environment} from "../../enviroment/env";
 
 interface UserSummary {
   isBanned: any;
@@ -28,7 +29,7 @@ interface UserDetails {
 
 interface BanRequestDto {
   reason: string;
-  duration: 'TEMPORARY_7_DAYS' | 'TEMPORARY_30_DAYS' | 'PERMANENT'; 
+  duration: 'TEMPORARY_7_DAYS' | 'TEMPORARY_30_DAYS' | 'PERMANENT';
   comment?: string;
 }
 
@@ -55,8 +56,8 @@ interface UnbanResponse {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/api/user';
-  private apiUrl = 'http://localhost:8080/api/admin';
+  private baseUrl = `${environment.apiUrlImg}/api/user`;
+  private apiUrl = `${environment.apiUrlImg}/api/auth`;
 
 
   constructor(private http: HttpClient) {}
@@ -80,7 +81,7 @@ export class UserService {
     return [
       "Comportement toxique ou langage offensant",
       "Usurpation d'identité ou fausse information",
-      "Exploitation de bugs ou failles du jeu", 
+      "Exploitation de bugs ou failles du jeu",
       "Spam ou messages répétitifs"
     ];
   }
@@ -100,7 +101,7 @@ export class UserService {
     }
     return this.http.post<UnbanResponse>(`${this.apiUrl}/unban/${userId}`, {}, { params });
   }
-  
+
   getBanHistory(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/ban-history/${userId}`);
   }
@@ -108,7 +109,7 @@ export class UserService {
     return this.http.get<number>(`${this.baseUrl}/usernames/count`);
   }
   countNewUsersLastWeek(): Observable<number> {
-   
+
     return this.http.get<number>(`${this.baseUrl}/count/new-last-week`);
   }
   getUsersWithStatus(): Observable<{active: number, banned: number}> {
@@ -122,25 +123,25 @@ export class UserService {
     );
   }
   getNewCustomersGrowthPercentage(): Observable<number> {
-  
+
     return this.http.get<number>(`${this.baseUrl}/new-customers/growth-percentage`);
   }
 
   getNewUserCount(period: string): Observable<number> {
-   
+
     return this.http.get<number>(`${this.baseUrl}/count/new?period=${period}`);
   }
 
   getNewUsersChartData(startDate: Date, endDate: Date, unit: 'DAYS' | 'WEEKS' | 'MONTHS' = 'WEEKS'): Observable<{ [date: string]: number }> {
-    const formattedStartDate = formatDate(startDate, 'yyyy-MM-dd', 'en-US'); 
-    const formattedEndDate = formatDate(endDate, 'yyyy-MM-dd', 'en-US');   
+    const formattedStartDate = formatDate(startDate, 'yyyy-MM-dd', 'en-US');
+    const formattedEndDate = formatDate(endDate, 'yyyy-MM-dd', 'en-US');
 
-   return this.http.get<{ [date: string]: number }>(`${this.apiUrl}/stats/new-by-period`, {
-     params: {
-       startDate: formattedStartDate,
-       endDate: formattedEndDate,
-       unit: unit
-     }
-   });
- }
+    return this.http.get<{ [date: string]: number }>(`${this.apiUrl}/stats/new-by-period`, {
+      params: {
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+        unit: unit
+      }
+    });
+  }
 }

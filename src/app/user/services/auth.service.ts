@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import {environment} from "../../enviroment/env";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = `${environment.apiUrlImg}/api/auth`;
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
@@ -25,7 +26,7 @@ export class AuthenticationService {
 
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    
+
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, { headers })
       .pipe(
         tap(user => {
@@ -33,9 +34,9 @@ export class AuthenticationService {
             const userData = {
               email: user.email,
               token: user.token,
-              username: user.username, 
+              username: user.username,
               userId: user.userId,
-              roles: user.roles || [] , 
+              roles: user.roles || [] ,
               profilePictureUrl: user.profilePictureUrl
             };
             localStorage.setItem('currentUser', JSON.stringify(userData));
@@ -53,15 +54,15 @@ export class AuthenticationService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Login failed. Please try again.';
-    
+
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Client error: ${error.error.message}`;
     } else {
-      errorMessage = error.error?.message || 
-                   error.statusText || 
-                   'Server error occurred';
+      errorMessage = error.error?.message ||
+        error.statusText ||
+        'Server error occurred';
     }
-    
+
     return throwError(() => new Error(errorMessage));
   }
 

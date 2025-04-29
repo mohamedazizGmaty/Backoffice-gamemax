@@ -2,6 +2,7 @@ import {Component, ChangeDetectorRef, NgZone, OnInit, OnDestroy} from '@angular/
 import {Pack} from "../../models/pack.model";
 import { PacksService } from '../../services/packs.service';
 import {SubssService} from "../../services/subs.service";
+import {environment} from "../../../enviroment/env";
 
 
 @Component({
@@ -22,6 +23,14 @@ export class AllSubsComponent implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
   isClosing = false;
+  subs:any[] =[];
+  baseUrl: string= environment.apiUrlImg;
+
+
+  subscriptionStats: {
+    counts: { BASIC: number, STANDARD: number, PREMIUM: number },
+    revenue: { BASIC: number, STANDARD: number, PREMIUM: number, TOTAL: number }
+  } | null = null;
 
 
 
@@ -49,6 +58,7 @@ export class AllSubsComponent implements OnInit {
     this.loadAllPacks();
 
     this.loadPacks();
+    this.loadSubs();
   }
   unassignPack(packId: number,SubId:number): void{
 
@@ -56,7 +66,7 @@ export class AllSubsComponent implements OnInit {
 
     this.subService.unassignPack(packId, SubId).subscribe({
       next: (response) => {
-        console.log('Pack assigned successfully:', response);
+       // console.log('Pack assigned successfully:', response);
       },
       error: (error) => {
         console.error('Error assigning pack:', error);
@@ -75,7 +85,7 @@ export class AllSubsComponent implements OnInit {
     }
     this.subService.assignPack(packId, SubId).subscribe({
       next: (response) => {
-        console.log('Pack assigned successfully:', response);
+       // console.log('Pack assigned successfully:', response);
         this.successMessage = "Pack assigned successfully";
 
         this.isClosing = true;
@@ -103,10 +113,10 @@ export class AllSubsComponent implements OnInit {
 
     this.packService.getPacksbyPlan(2).subscribe({
       next: (packs) => {
-        console.log('Pack assigned successfully:', packs);
+   //     console.log('Pack assigned successfully:', packs);
         this.basicPacks = packs;
         this.isLoading = false;
-        console.log(this.basicPacks);
+       // console.log(this.basicPacks);
       },
       error: (err) => {
         console.error('Error loading basic packs:', err);
@@ -127,7 +137,7 @@ export class AllSubsComponent implements OnInit {
     this.packService.getPacksbyPlan(3).subscribe({
       next: (packs) => {
         this.premiumPacks = packs;
-        console.log(this.premiumPacks);
+      //  console.log(this.premiumPacks);
       },
       error: (err) => {
         console.error('Error loading premium packs:', err);
@@ -207,5 +217,70 @@ export class AllSubsComponent implements OnInit {
     ];
     return positions[index] || 'center'; // Fallback
   }
+
+
+  loadSubs(): void {
+    this.subService.getAllSubs().subscribe({
+      next: (subs) => {
+        this.subs = subs;
+        this.calculateRevenueByType(); // 👈 ajoute cette ligne
+        // console.log(this.subs);
+      },
+      error: (err) => {
+        console.error('Error loading packs:', err);
+      }
+    });
+  }
+
+
+  calculateRevenueByType(): void {
+    const counts = {
+      BASIC: 0,
+      STANDARD: 0,
+      PREMIUM: 0
+    };
+
+    const prices = {
+      BASIC: 10,       // replace with your actual price
+      STANDARD: 20,
+      PREMIUM: 30
+    };
+
+    for (const sub of this.subs) {
+      const type = (sub.subscriptionType || '').toUpperCase().trim();
+      if (type=="BASIC" && counts.hasOwnProperty("BASIC")) {
+        counts["BASIC"]++;
+         console.log(`[${type}] ${sub.subscriptionType}: ${sub.subscriptionType}`);
+      }
+      else if (type=="STANDARD" && counts.hasOwnProperty("STANDARD")) {
+        counts["STANDARD"]++;
+        console.log(`[${type}] ${sub.subscriptionType}: ${sub.subscriptionType}`);
+      }
+      else if (type=="PREMIUM" && counts.hasOwnProperty("PREMIUM")) {
+        counts["PREMIUM"]++;
+        console.log(`[${type}] ${sub.subscriptionType}: ${sub.subscriptionType}`);
+      }
+    }
+
+    const revenue = {
+      BASIC: counts.BASIC * prices.BASIC,
+      STANDARD: counts.STANDARD * prices.STANDARD,
+      PREMIUM: counts.PREMIUM * prices.PREMIUM,
+      TOTAL: (
+        counts.BASIC * prices.BASIC +
+        counts.STANDARD * prices.STANDARD +
+        counts.PREMIUM * prices.PREMIUM
+      )
+    };
+
+    console.log('Subscription Counts:', counts);
+    console.log('Revenue:', revenue);
+
+    this.subscriptionStats = {
+      counts,
+      revenue
+    };
+  }
+
 
 }

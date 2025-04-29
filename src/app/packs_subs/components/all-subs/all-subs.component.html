@@ -29,7 +29,7 @@
             <div>
               <h5 class="mb-2">Standard Pack</h5>
               <p class="fs-9 text-body-tertiary mb-1">Forecast Revenue:</p>
-              <h4 class="mb-3">$37,000.00</h4>
+              <h4 class="mb-3">$  {{ subscriptionStats?.counts?.STANDARD }},000.00</h4>
             </div>
             <div class="d-flex gap-3"><button class="btn p-0" type="button" data-bs-toggle="modal" data-bs-target="#tooltipModal" (click)="openModal(1)" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-plus" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path></svg><!-- <span class="fa-solid fa-plus"></span> Font Awesome fontawesome.com --></button><button class="btn p-0" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-ellipsis fs-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200C94.93 200 120 225.1 120 256zM280 256C280 286.9 254.9 312 224 312C193.1 312 168 286.9 168 256C168 225.1 193.1 200 224 200C254.9 200 280 225.1 280 256zM328 256C328 225.1 353.1 200 384 200C414.9 200 440 225.1 440 256C440 286.9 414.9 312 384 312C353.1 312 328 286.9 328 256z"></path></svg><!-- <span class="fas fa-ellipsis-h fs-10"></span> Font Awesome fontawesome.com --></button>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -57,7 +57,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid me-1 text-body-quaternary" style="stroke-width:2; height: 12px; width: 12px">
                         <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect>
                         <rect x="3" y="14" width="7" height="7"></rect></svg>Financial</p>
-                      <p class="ms-auto fs-9 text-body-emphasis fw-semibold mb-0 deals-revenue">$14,000.00</p>
+                      <p class="ms-auto fs-9 text-body-emphasis fw-semibold mb-0 deals-revenue">${{ subscriptionStats?.counts?.STANDARD }},000.00</p>
                     </div>
                     <div class="deals-company-agent d-flex flex-between-center">
                       <div class="d-flex align-items-center"><span class="uil uil-user me-2"></span>
@@ -83,7 +83,7 @@
                           </td>
                           <td class="py-1 d-none d-sm-block pe-sm-2">:</td>
                           <td class="py-1">
-                            <p class="ps-6 ps-sm-0 fw-semibold fs-9 mb-0 mb-0 pb-3 pb-sm-0 text-body-emphasis">$14,000.00</p>
+                            <p class="ps-6 ps-sm-0 fw-semibold fs-9 mb-0 mb-0 pb-3 pb-sm-0 text-body-emphasis">${{ subscriptionStats?.counts?.STANDARD }},000.00</p>
                           </td>
                         </tr>
                         <tr>
@@ -145,7 +145,7 @@
             <div>
               <h5 class="mb-2">Premium Pack</h5>
               <p class="fs-9 text-body-tertiary mb-1">Forecast Revenue:</p>
-              <h4 class="mb-3">$101,300.00</h4>
+              <h4 class="mb-3">${{ subscriptionStats?.counts?.PREMIUM }},300.00</h4>
             </div>
             <div class="d-flex gap-3"><button class="btn p-0" type="button" data-bs-toggle="modal" data-bs-target="#tooltipModal" (click)="openModal(3)" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-plus" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path></svg><!-- <span class="fa-solid fa-plus"></span> Font Awesome fontawesome.com --></button><button class="btn p-0" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-ellipsis fs-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200C94.93 200 120 225.1 120 256zM280 256C280 286.9 254.9 312 224 312C193.1 312 168 286.9 168 256C168 225.1 193.1 200 224 200C254.9 200 280 225.1 280 256zM328 256C328 225.1 353.1 200 384 200C414.9 200 440 225.1 440 256C440 286.9 414.9 312 384 312C353.1 312 328 286.9 328 256z"></path></svg><!-- <span class="fas fa-ellipsis-h fs-10"></span> Font Awesome fontawesome.com --></button>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -259,7 +259,7 @@
             <div>
               <h5 class="mb-2">Basic Pack</h5>
               <p class="fs-9 text-body-tertiary mb-1">Forecast Revenue:</p>
-              <h4 class="mb-3">$23,400.00</h4>
+              <h4 class="mb-3">${{ subscriptionStats?.counts?.BASIC }},400.00</h4>
             </div>
             <div class="d-flex gap-3"><button class="btn p-0" type="button" data-bs-toggle="modal" data-bs-target="#tooltipModal" (click)="openModal(2)" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-plus" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path></svg><!-- <span class="fa-solid fa-plus"></span> Font Awesome fontawesome.com --></button><button class="btn p-0" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><svg class="svg-inline--fa fa-ellipsis fs-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200C94.93 200 120 225.1 120 256zM280 256C280 286.9 254.9 312 224 312C193.1 312 168 286.9 168 256C168 225.1 193.1 200 224 200C254.9 200 280 225.1 280 256zM328 256C328 225.1 353.1 200 384 200C414.9 200 440 225.1 440 256C440 286.9 414.9 312 384 312C353.1 312 328 286.9 328 256z"></path></svg><!-- <span class="fas fa-ellipsis-h fs-10"></span> Font Awesome fontawesome.com --></button>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -400,7 +400,8 @@
                     [class.glow-active]="selectedPackId === pack.packId">
 
                   <div class="bg">
-                    <img src="http://localhost:8094{{ pack.image.imageUrl }}"
+                    <img
+                         [src]="baseUrl + '/api'+pack.image.imageUrl"
                          class="img-fit">
                   </div>
 

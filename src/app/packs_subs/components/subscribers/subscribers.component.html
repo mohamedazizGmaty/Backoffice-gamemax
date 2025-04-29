@@ -59,47 +59,35 @@
       <div class="col-xl-5 col-xxl-4">
         <div class="card">
           <div class="card-body">
-
             <div class="table-responsive scrollbar">
               <table class="reports-details-chart-table table table-sm fs-9 mb-0">
                 <thead>
                 <tr>
-                  <th class="align-middle pe- text-body-tertiary fw-bold fs-10 text-uppercase text-nowrap" scope="col" style="width:35%;">Report stage</th>
-                  <th class="align-middle text-end ps-4 text-body-tertiary fw-bold fs-10 text-uppercase text-nowrap" scope="col" style="width:35%;">total count</th>
-                  <th class="align-middle text-end ps-4 text-body-tertiary fw-bold fs-10 text-uppercase" scope="col" style="width:30%;">Status</th>
+                  <th class="align-middle text-body-tertiary fw-bold fs-10 text-uppercase text-nowrap" style="width:35%;">Report stage</th>
+                  <th class="align-middle text-end ps-4 text-body-tertiary fw-bold fs-10 text-uppercase text-nowrap" style="width:35%;">total count</th>
+                  <th class="align-middle text-end ps-4 text-body-tertiary fw-bold fs-10 text-uppercase" style="width:30%;">Status</th>
                 </tr>
                 </thead>
-                <tbody class="list" id="report-data-body">
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">Analysis</td>
-                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">03</td>
-                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight"><span class="badge badge-phoenix badge-phoenix-info">+15.21%</span></td>
-                </tr>
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">Statement</td>
-                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">01</td>
-                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight"><span class="badge badge-phoenix badge-phoenix-warning">+05.21%</span></td>
-                </tr>
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">Action</td>
-                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">02</td>
-                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight"><span class="badge badge-phoenix badge-phoenix-primary">+22.12%</span></td>
-                </tr>
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">Offering</td>
-                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">02</td>
-                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight"><span class="badge badge-phoenix badge-phoenix-danger">-14.21%</span></td>
-                </tr>
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">Interlocution</td>
-                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">02</td>
-                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight"><span class="badge badge-phoenix badge-phoenix-danger">-14.21%</span></td>
+                <tbody id="report-data-body">
+                <tr *ngFor="let entry of subscriptionStats | keyvalue" class="hover-actions-trigger btn-reveal-trigger position-static">
+                  <td class="align-middle white-space-nowrap fw-semibold text-body-highlight py-2">
+                    {{ entry.key }}
+                  </td>
+                  <td class="align-middle text-end white-space-nowrap fw-semibold text-body-highlight ps-4 py-2">
+                    {{ entry.value }}
+                  </td>
+                  <td class="align-middle text-end white-space-nowrap ps-4 fw-semibold text-body-highlight">
+              <span class="badge badge-phoenix" [ngClass]="getBadgeClass(entry.value)">
+                {{ getTrend(entry.value) }}
+              </span>
+                  </td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
+
       </div>
       <div class="col-xl-7 col-xxl-8">
         <div class="border-top border-translucent">
@@ -120,17 +108,17 @@
                 </tr>
                 </thead>
                 <tbody class="list" id="purchasers-sellers-body" >
-                <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let sub of subs" >
+                <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let sub of combinedList" >
                   <td class="fs-9 align-middle py-0">
                     <div class="form-check mb-0 fs-8"><input class="form-check-input" type="checkbox" data-bulk-select-row="{&quot;dealsName&quot;:&quot;Jo_Td01&quot;,&quot;dealOwner&quot;:{&quot;avatar&quot;:&quot;team/avatar.webp&quot;,&quot;name&quot;:&quot;Ally Aagaard&quot;,&quot;placeholder&quot;:true},&quot;accountName&quot;:&quot;Themewagon&quot;,&quot;stage&quot;:{&quot;label&quot;:&quot;Analysis&quot;,&quot;color&quot;:&quot;#3874FF&quot;,&quot;data&quot;:20},&quot;amount&quot;:{&quot;totalAmount&quot;:&quot;$140&quot;,&quot;icon&quot;:&quot;trending-down&quot;,&quot;color&quot;:&quot;text-danger&quot;}}"></div>
                   </td>
-                  <td class="deals_name align-middle white-space-nowrap fw-semibold text-body-highlight ps-0 py-0"><a class="fw-bold text-primary" href="#!">FeR9b{{sub.userId}}</a></td>
+                  <td class="deals_name align-middle white-space-nowrap fw-semibold text-body-highlight ps-0 py-0"><a class="fw-bold text-primary" href="#!">FeR9b{{sub.user.userId}}</a></td>
                   <td class="deal_owner align-middle white-space-nowrap fw-semibold text-body-emphasis ps-4 py-0">
                     <div class="d-flex align-items-center position-relative">
-                      <div class="avatar avatar-m me-3"><img class="rounded-circle avatar-placeholder" src="../../assets/img/team/avatar.webp" alt=""></div><a class="text-body-highlight fw-bold stretched-link" href="#!">Ally Aagaard</a>
+                      <div class="avatar avatar-m me-3"><img class="rounded-circle avatar-placeholder" src="../../assets/img/team/avatar.webp" alt=""></div><a class="text-body-highlight fw-bold stretched-link" href="#!">{{sub.user.fullName}}</a>
                     </div>
                   </td>
-                  <td class="account_name align-middle white-space-nowrap ps-4 fw-semibold text-body py-0">{{sub.subscriptionType}}</td>
+                  <td class="account_name align-middle white-space-nowrap ps-4 fw-semibold text-body py-0">{{sub.subscription.subscriptionType}}</td>
 <!--                  <td class="stage align-middle white-space-nowrap fw-bold text-body py-0">-->
 <!--                    <div class="d-flex align-items-center gap-3">-->
 <!--                      <div style="&#45;&#45;phoenix-circle-progress-bar:20"><svg class="circle-progress-svg" width="54" height="54" viewBox="0 0 170 170">-->
@@ -142,18 +130,18 @@
 <!--                  </td>-->
                   <td class="stage align-middle white-space-nowrap fw-bold text-body py-0">
                     <div class="d-flex align-items-center gap-3">
-                      <div [style.--phoenix-circle-progress-bar]="calculateProgress(sub.startingDate, sub.expirationDate)">
+                      <div [style.--phoenix-circle-progress-bar]="calculateProgress(sub.subscription.startingDate, sub.subscription.expirationDate)">
                         <svg class="circle-progress-svg" width="54" height="54" viewBox="0 0 170 170">
                           <circle class="progress-bar-rail" cx="60" cy="60" r="54" fill="none" stroke-linecap="round" stroke-width="12"></circle>
                           <circle class="progress-bar-top" cx="60" cy="60" r="54" fill="none" stroke-linecap="round"
-                                  [attr.stroke]="getProgressColor(calculateProgress(sub.startingDate, sub.expirationDate))"
+                                  [attr.stroke]="getProgressColor(calculateProgress(sub.subscription.startingDate, sub.subscription.expirationDate))"
                                   stroke-width="12"
-                                  [attr.stroke-dasharray]="calculateDashArray(calculateProgress(sub.startingDate, sub.expirationDate))">
+                                  [attr.stroke-dasharray]="calculateDashArray(calculateProgress(sub.subscription.startingDate, sub.subscription.expirationDate))">
                           </circle>
                         </svg>
                       </div>
 
-                      <h6 class="mb-0 text-body">{{getProgressStatus(calculateProgress(sub.startingDate, sub.expirationDate))}}</h6>
+                      <h6 class="mb-0 text-body">{{getProgressStatus(calculateProgress(sub.subscription.startingDate, sub.subscription.expirationDate))}}</h6>
                     </div>
                   </td>
                   <td class="amount align-middle white-space-nowrap fw-bold ps-4 text-body py-0">$140<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-down ms-2 text-danger" style="min-height:8px; width:14px;"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg></td>

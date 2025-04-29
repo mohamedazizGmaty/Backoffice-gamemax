@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { PacksService } from '../../services/packs.service';
 import { Router } from '@angular/router';
 import { PackFormModel } from '../../models/pack-form.model';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../enviroment/env";
 
 @Component({
   selector: 'app-add-pack',
@@ -19,12 +21,19 @@ export class AddPackComponent implements OnInit {
   todayDate: string;
   formModel = new PackFormModel();
   selectedGamesNames: string[] = [];
+  selectedGamesId: string[] = [];
+  selectedCategoryId: number=3;
+  imageUrl: string | undefined;
+
+
+
   selectedFiles: File[] = [];
 
   constructor(
     private fb: FormBuilder,
     private packService: PacksService,
     private router: Router,
+    private http: HttpClient
   ) {
     this.todayDate = this.formModel.availableDate;
     this.initializeForm();
@@ -135,29 +144,35 @@ export class AddPackComponent implements OnInit {
 
     this.isGenerating = true;
     this.errorMessage = '';
-
     this.packService.generatePackInfo(this.selectedGamesNames).subscribe({
       next: (response) => {
-        this.packForm.patchValue({
-          packName: response.packName,
-          description: response.description
+         // Assurez-vous que 'categoryName' est la bonne propriété
+
+        this.packService.createCategorie(  response.category ).subscribe({
+          next: (newCategory) => {
+            this.categories = [...this.categories, newCategory];
+            this.selectedCategoryId = newCategory.categorieId;
+            this.packForm.patchValue({
+              packName: response.packName,
+              description: response.description
+            });
+
+            this.isGenerating = false;
+          },
+          error: (err) => {
+            this.errorMessage = 'Erreur lors de la création de la catégorie : ' + (err.error?.message || err.message);
+            this.isGenerating = false;
+          }
         });
-        this.isGenerating = false;
       },
       error: (err) => {
-        this.errorMessage = 'Échec de la génération: ' + (err.error?.message || err.message);
+        this.errorMessage = 'Échec de la génération : ' + (err.error?.message || err.message);
         this.isGenerating = false;
       }
     });
+
   }
-  //
-  // onFileSelected(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     this.selectedFiles = Array.from(input.files);
-  //     this.formModel.image = this.selectedFiles[0];
-  //   }
-  // }
+
 
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
@@ -232,6 +247,8 @@ export class AddPackComponent implements OnInit {
       this.errorMessage = 'Veuillez sélectionner une image pour le pack';
       return;
     }
+    console.log(this.selectedCategoryId);
+
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -241,23 +258,53 @@ export class AddPackComponent implements OnInit {
       description: this.packForm.value.description,
       availableDate: this.formatDateForAPI(this.packForm.value.availableDate),
       expirationDate: this.formatDateForAPI(this.packForm.value.expirationDate),
-      // selectedGames: this.formModel.selectedGames // tu peux le remettre si utilisé
+
+     //  selectedGames: ["1","2"] // tu peux le remettre si utilisé
     };
 
     const formData = new FormData();
     formData.append('pack', JSON.stringify(packData)); // IMPORTANT : clé = 'pack'
     formData.append('image', this.formModel.image);    // clé = 'image'
+    console.log('Catégorie choisie :', this.selectedCategoryId);
+    this.packService.savePack(formData, Number(this.selectedCategoryId)).subscribe({
+      next: (savedPack) => {
+        console.log('Inserted Pack:', savedPack);
 
-    this.packService.savePack(formData, 3).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/allPacks']);
+        const selectedGameIds = this.games
+          .filter(game => this.selectedGamesNames.includes(game.gameName))
+          .map(game => game.gameId);
+        console.log('Games assigned successfully.',selectedGameIds);
+
+        this.packService.assignGamesToPack(selectedGameIds, savedPack.packId).subscribe({
+
+          next: () => {
+            this.isLoading = false;
+           this.router.navigate(['/allPacks']);
+          },
+          error: (assignError) => {
+            console.error('Error assigning games to pack:', assignError);
+            this.isLoading = false;
+            this.errorMessage = assignError.error?.message || 'Erreur lors de l\'assignation des jeux au pack';
+          }
+        });
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMessage = err.error?.message || 'Une erreur est survenue lors de la création du pack';
         console.error('Error saving pack:', err);
       }
+    });
+
+  }
+
+  generateImage() {
+    const prompt = 'A high-resolution, cinematic poster about a game pack about these folowing games : '+this.selectedGamesNames+' . Professional concept art style, 4K quality, poster layout with depth, contrast, and powerful composition.\n';
+    const encodedPrompt = encodeURIComponent(prompt);
+
+    this.http.post(`${environment.apiUrl}/generate-pack/image?prompt=${encodedPrompt}`, {
+      responseType: 'blob'
+    }).subscribe(blob => {
+      //this.imageUrl = URL.createObjectURL(blob);
     });
   }
 

@@ -1,269 +1,643 @@
+/* ====================================================== */
+/* ========== CSS Variables for Theming (Light Mode Default) ========== */
+/* ====================================================== */
+:root {
+  /* Backgrounds */
+  --bg-body: #f4f7f6;
+  --bg-container: #ffffff;
+  --bg-container-alt: #f8f9fa; /* Filters section, row hover */
+  --bg-table-header: #f7fafc;
+  --bg-input: #ffffff;
+  --bg-modal-overlay: rgba(0, 0, 0, 0.6);
+  --bg-modal-content: #ffffff;
+  --bg-close-btn-preview: rgba(255, 255, 255, 0.7);
+  --bg-close-btn-preview-hover: rgba(255, 255, 255, 1);
+
+  /* Text */
+  --text-primary: #2c3e50; /* Headings, primary text */
+  --text-secondary: #4a5568; /* Labels, secondary text */
+  --text-muted: #718096; /* Icons in labels, less important text */
+  --text-on-primary: #ffffff; /* Text on primary buttons */
+  --text-on-dark-header: #4a5568; /* Table header text */
+  --text-error: #e74c3c;
+  --text-success: #2ecc71;
+  --text-warning: #b79000; /* Darker yellow for warning text */
+  --text-info: #3498db;
+
+  /* Borders */
+  --border-color: #e0e0e0; /* Header bottom */
+  --border-color-light: #edf2f7; /* Table rows */
+  --border-input: #cbd5e0;
+  --border-focus: #3498db;
+  --border-error: #f9d7da;
+  --border-warning: #ffecb3;
+  --border-dashed: #e0e0e0;
+
+  /* Shadows */
+  --shadow-color-light: rgba(0, 0, 0, 0.08);
+  --shadow-color-medium: rgba(0, 0, 0, 0.07);
+  --shadow-color-dark: rgba(0, 0, 0, 0.2);
+  --shadow-focus: rgba(52, 152, 219, 0.2);
+
+  /* Primary/Accent Colors (Buttons, Badges, Highlights) */
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --success-color: #58d68d;
+  --success-hover: #2ecc71;
+  --warning-color: #f5b041;
+  --warning-hover: #f39c12;
+  --danger-color: #ec7063;
+  --danger-hover: #e74c3c;
+  --danger-hover-strong: #c0392b; /* For delete button maybe */
+  --info-color: #5dade2;
+  --info-hover: #3498db;
+  --accent-color: #a569bd; /* Preview button */
+  --accent-hover: #8e44ad;
+  --badge-unknown-bg: #95a5a6;
+
+  /* State Backgrounds */
+  --bg-state-loading: #eaf4fb;
+  --bg-state-error: #feecf0;
+  --bg-state-warning: #fff9e6;
+  --bg-state-no-results: #f8f9fa;
+
+  /* Misc */
+  --icon-color-label: var(--text-muted);
+  --icon-color-header: var(--primary-color);
+  --icon-color-no-results: #bdc3c7;
+}
+
+/* ====================================================== */
+/* ========== Dark Mode Variable Overrides ========== */
+/* ====================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Backgrounds */
+    --bg-body: #1a202c; /* Very dark blue-gray */
+    --bg-container: #2d3748; /* Dark gray */
+    --bg-container-alt: #4a5568; /* Slightly lighter dark gray */
+    --bg-table-header: #2d3748; /* Match container */
+    --bg-input: #4a5568;
+    --bg-modal-overlay: rgba(0, 0, 0, 0.75); /* Darker overlay */
+    --bg-modal-content: #2d3748; /* Dark modal */
+    --bg-close-btn-preview: rgba(45, 55, 72, 0.7); /* Darker semi-transparent */
+    --bg-close-btn-preview-hover: rgba(45, 55, 72, 1);
+
+    /* Light Text */
+    --text-primary: #edf2f7; /* Light gray */
+    --text-secondary: #a0aec0; /* Medium gray */
+    --text-muted: #718096;
+    --text-on-primary: #ffffff; /* Keep white or make slightly off-white */
+    --text-on-dark-header: #e2e8f0; /* Light text for dark header */
+    --text-error: #fabab4; /* Lighter red */
+    --text-success: #9ae6b4; /* Lighter green */
+    --text-warning: #fbd38d; /* Lighter orange */
+    --text-info: #90cdf4; /* Lighter blue */
+
+    /* Dark Borders */
+    --border-color: #4a5568;
+    --border-color-light: #4a5568; /* Use same darker border */
+    --border-input: #718096;
+    --border-focus: #63b3ed; /* Lighter blue focus */
+    --border-error: #c53030; /* Dark red border */
+    --border-warning: #dd6b20; /* Dark orange border */
+    --border-dashed: #4a5568;
+
+    /* Shadows (Often reduced or removed in dark mode) */
+    --shadow-color-light: rgba(0, 0, 0, 0.2); /* Maybe use subtle light borders instead */
+    --shadow-color-medium: rgba(0, 0, 0, 0.3);
+    --shadow-color-dark: rgba(0, 0, 0, 0.5);
+    --shadow-focus: rgba(99, 179, 237, 0.3); /* Adjusted focus shadow color */
+
+    /* Primary/Accent Colors (Keep intensity or adjust slightly if needed) */
+    /* --primary-color: #63b3ed; */ /* Optionally lighten blue */
+    /* --success-color: #68d391; */ /* Optionally lighten green */
+
+    /* State Backgrounds */
+    --bg-state-loading: #2d3748; /* Match container */
+    --bg-state-error: #4a1d1f; /* Dark red */
+    --bg-state-warning: #4c3000; /* Dark orange/brown */
+    --bg-state-no-results: #2d3748; /* Match container */
+
+    /* Misc */
+    --icon-color-label: var(--text-muted);
+    --icon-color-no-results: #718096;
+  }
+
+  /* Specific dark mode adjustments if needed */
+  .close-preview-btn {
+    color: var(--text-primary); /* Light text on dark bg */
+  }
+  .close-preview-btn:hover {
+    color: var(--danger-color); /* Use danger color for hover */
+  }
+  /* Input placeholder text color */
+  input::placeholder, select {
+      color: var(--text-muted);
+      opacity: 0.8;
+  }
+}
+
+
+/* ====================================================== */
+/* ========== Base and Component Styles (Using Variables) ========== */
+/* ====================================================== */
+
 /* Styles de base */
 .admin-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-  
-  /* En-tête */
-  .admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .admin-header h1 {
-    color: #2c3e50;
-    margin: 0;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  /* Boutons */
-  button {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 15px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .refresh-btn {
-    background-color: #3498db;
-    color: white;
-  }
-  
-  .refresh-btn:hover {
-    background-color: #2980b9;
-  }
-  
-  .apply-btn {
-    background-color: #2ecc71;
-    color: white;
-  }
-  
-  .apply-btn:hover {
-    background-color: #27ae60;
-  }
-  
-  .reset-btn {
-    background-color: #f39c12;
-    color: white;
-  }
-  
-  .reset-btn:hover {
-    background-color: #d35400;
-  }
-  
-  .delete-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 50%;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c0392b;
-  }
-  
-  .close-btn {
-    background: none;
-    color: #333;
-    font-size: 18px;
-    padding: 0 0 0 10px;
-  }
-  
-  /* Section des filtres */
-  .filters-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 25px;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .filter-group label {
-    font-weight: 600;
-    font-size: 14px;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .filter-group input, .filter-group select {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .filter-actions {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-  }
-  
-  /* Tableau */
-  .reclamations-table {
-    overflow-x: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-  
-  th {
-    background-color: #2c3e50;
-    color: white;
-    font-weight: 600;
-  }
-  
-  tr:hover {
-    background-color: #f8f9fa;
-  }
-  
-  .title-cell {
-    max-width: 200px;
-    white-space: nowrap;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  color: var(--text-secondary); /* Use secondary text as default */
+  background-color: var(--bg-body);
+  border-radius: 8px;
+  /* box-shadow: 0 4px 12px var(--shadow-color-light); Use border instead for dark mode? */
+}
+
+/* En-tête */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.admin-header h1 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-header h1 i {
+  color: var(--icon-color-header); /* Use variable */
+}
+
+/* Boutons Généraux */
+button {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  border: none;
+  border-radius: 5px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Styles spécifiques aux boutons */
+.refresh-btn {
+  background-color: var(--info-color);
+  color: var(--text-on-primary);
+}
+.refresh-btn:hover { background-color: var(--info-hover); }
+
+.apply-btn {
+  background-color: var(--success-color);
+  color: var(--text-on-primary);
+}
+.apply-btn:hover { background-color: var(--success-hover); }
+
+.reset-btn {
+  background-color: var(--warning-color);
+  color: var(--text-on-primary);
+}
+.reset-btn:hover { background-color: var(--warning-hover); }
+
+.delete-btn {
+  background-color: var(--danger-color);
+  color: var(--text-on-primary);
+  padding: 6px 10px;
+}
+.delete-btn:hover { background-color: var(--danger-hover-strong, var(--danger-hover)); } /* Use stronger hover if defined */
+
+/* Close button (for alerts/modals) */
+.close-btn {
+  background: none;
+  color: var(--text-secondary); /* Use variable */
+  font-size: 22px;
+  padding: 0 5px;
+  line-height: 1;
+  opacity: 0.7;
+}
+.close-btn:hover {
+  opacity: 1;
+  color: var(--text-primary); /* Use variable */
+}
+/* Specific close for preview modal */
+.close-preview-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: var(--bg-close-btn-preview); /* Use variable */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  color: var(--text-secondary); /* Use variable */
+  z-index: 1100;
+  box-shadow: 0 1px 3px var(--shadow-color-dark);
+}
+.close-preview-btn:hover {
+  background: var(--bg-close-btn-preview-hover); /* Use variable */
+  color: var(--danger-color); /* Use variable */
+}
+
+
+/* Preview button (in table) */
+.preview-btn {
+  background-color: var(--accent-color);
+  color: var(--text-on-primary);
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.preview-btn:hover { background-color: var(--accent-hover); }
+
+
+/* Section des filtres */
+.filters-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+  background: var(--bg-container); /* Use variable */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px var(--shadow-color-medium); /* Use variable */
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: var(--text-secondary); /* Use variable */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-group label i {
+  color: var(--icon-color-label); /* Use variable */
+}
+
+.filter-group input, .filter-group select {
+  padding: 9px 12px;
+  border: 1px solid var(--border-input); /* Use variable */
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: var(--bg-input); /* Use variable */
+  color: var(--text-primary); /* Use variable */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-group input:focus, .filter-group select:focus {
+  border-color: var(--border-focus); /* Use variable */
+  outline: none;
+  box-shadow: 0 0 0 2px var(--shadow-focus); /* Use variable */
+}
+/* Input placeholder text color for dark mode */
+input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+select { /* Ensure select text color is inherited */
+    color: var(--text-primary);
+}
+/* Style options for selects if needed, though browser support is limited */
+
+
+.filter-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  grid-column: span 2;
+  justify-content: flex-start;
+}
+
+/* Tableau */
+.reclamations-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+.reclamations-table {
+  background: var(--bg-container); /* Use variable */
+  border-radius: 8px;
+  box-shadow: 0 4px 15px var(--shadow-color-light); /* Use variable */
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color-light); /* Use variable */
+  vertical-align: middle;
+}
+
+th {
+  background-color: var(--bg-table-header); /* Use variable */
+  color: var(--text-on-dark-header); /* Use variable */
+  font-weight: 600;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+tbody tr:hover {
+  background-color: var(--bg-container-alt); /* Use variable */
+}
+
+/* Cell specific styles */
+.description-cell {
+  max-width: 250px;
+  white-space: normal;
+  font-size: 0.95em;
+  line-height: 1.5;
+  color: var(--text-primary); /* Ensure description text uses primary color */
+}
+
+.attachment-cell {
+  font-size: 0.9em;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.attachment-cell i {
+    margin-right: 5px;
+    color: var(--icon-color-label);
+}
+.attachment-cell span {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  
-  .actions-cell {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  
-  .status-select {
-    padding: 6px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: white;
-  }
-  
-  /* Badges de statut */
-  .status-badge {
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-    text-transform: capitalize;
-  }
-  
-  .status-open {
-    background-color: #3498db;
-  }
-  
-  .status-in_progress {
-    background-color: #f39c12;
-  }
-  
-  .status-resolved {
-    background-color: #2ecc71;
-  }
-  
-  .status-rejected {
-    background-color: #e74c3c;
-  }
-  
-  /* États */
-  .loading-state {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    white-space: nowrap;
+    color: var(--text-secondary); /* Ensure filename uses secondary color */
+}
+
+.actions-cell {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.status-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border-input);
+  border-radius: 5px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* Badges de statut */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-on-primary); /* Use variable, assumes light text on colored bg */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Status badge colors using variables */
+.status-open { background-color: var(--info-color); }
+.status-in-progress { background-color: var(--warning-color); }
+.status-resolved { background-color: var(--success-color); }
+.status-unknown { background-color: var(--badge-unknown-bg); color: var(--text-on-primary);}
+
+
+/* États (Loading/Error/NoResults) */
+.loading-state, .error-state, .no-results {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 1.05em;
+}
+
+.loading-state {
+  justify-content: center;
+  color: var(--text-info);
+  background-color: var(--bg-state-loading);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--primary-color); /* Use primary color */
+  border-right-color: transparent; /* Make spinner more visible */
+  border-radius: 50%;
+  /* border-top-color: var(--primary-color); Adjusted for better visibility */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-state {
+  justify-content: space-between;
+  background-color: var(--bg-state-error);
+  color: var(--text-error);
+  border: 1px solid var(--border-error);
+}
+.error-state i { margin-right: 5px; }
+
+.no-results {
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  background-color: var(--bg-state-no-results);
+  border: 1px dashed var(--border-dashed);
+  flex-direction: column;
+}
+
+.no-results i {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: var(--icon-color-no-results);
+}
+
+/* Attachment Preview Modal Styles */
+.preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-modal-overlay); /* Use variable */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.preview-overlay-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+}
+
+.preview-modal-content {
+  position: relative;
+  background-color: var(--bg-modal-content); /* Use variable */
+  color: var(--text-primary); /* Ensure modal text color is set */
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px var(--shadow-color-dark); /* Use variable */
+  max-width: 90vw;
+  max-height: 85vh;
+  width: 800px;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1002;
+  overflow: hidden;
+}
+
+.preview-loading, .preview-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  min-height: 200px;
+}
+.preview-error {
     padding: 20px;
-    color: #3498db;
-  }
-  
-  .spinner {
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(52, 152, 219, 0.3);
-    border-radius: 50%;
-    border-top-color: #3498db;
-    animation: spin 1s ease-in-out infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  .error-state {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #fdecea;
-    color: #d32f2f;
-    border-radius: 4px;
-  }
-  
-  .no-results {
-    text-align: center;
-    padding: 30px;
-    color: #7f8c8d;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .no-results i {
-    font-size: 24px;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
+    background-color: var(--bg-state-warning); /* Use warning state bg */
+    border: 1px solid var(--border-warning); /* Use warning state border */
+    color: var(--text-warning); /* Use warning state text */
+}
+
+.preview-display {
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.preview-display iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background-color: var(--bg-container); /* Set iframe bg for loading */
+}
+
+
+/* Responsive Adjustments (Keep as is) */
+@media (max-width: 992px) {
     .filters-section {
-      grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
-    
     .filter-actions {
-      grid-column: 1;
+        grid-column: span 1;
+        justify-content: flex-start;
     }
-    
-    th, td {
-      padding: 8px 10px;
-      font-size: 14px;
+    .preview-modal-content {
+        width: 90vw;
+        height: 80vh;
     }
-    
-    .actions-cell {
-      flex-direction: column;
-      align-items: flex-start;
-    }
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
+  .admin-actions {
+      align-self: flex-start;
+  }
+
+  .filters-section {
+    grid-template-columns: 1fr 1fr;
+  }
+  .filter-actions {
+     grid-column: span 2;
+     justify-content: center;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .actions-cell {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .preview-modal-content {
+      width: 95vw;
+      height: 85vh;
+      padding: 15px;
+  }
+  .close-preview-btn {
+      top: 5px;
+      right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+    .admin-header h1 {
+        font-size: 1.5em;
+    }
+    .filters-section {
+        grid-template-columns: 1fr;
+    }
+    .filter-actions {
+        grid-column: span 1;
+    }
+    button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    .actions-cell {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

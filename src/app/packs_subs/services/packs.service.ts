@@ -1,31 +1,32 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Pack } from '../models/pack.model';
-import { Game } from '../models/game.model';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Pack} from '../models/pack.model';
+import {Game} from '../models/game.model';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
+import {environment} from "../../enviroment/env";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacksService {
 
-  private apiUrl = 'http://26.3.30.155:8080/api/packs';
-  private apiUrl_games = 'http://26.3.30.155:8080/api/packs';
-  private apiUrl_Categories = 'http://26.3.30.155:8080/api/packs/getAllCategories';
+  private apiUrl = `${environment.apiUrl}/packs`;
+  private apiUrl_games = `${environment.apiUrl}/packs`;
+  private apiUrl_Categories = `${environment.apiUrl}/packs/getAllCategories`;
 
-  private apiUrl_Ai = 'http://26.3.30.155:8094/api/generate-pack';
+  private apiUrl_Ai = `${environment.apiUrl}/generate-pack`;
+  private apiUrl_AiImage = `${environment.apiUrl}/generate-pack`;
+
 
   private pack: any;
 
 
-
-
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllPacks(): Observable<Pack[]> {
     return this.http.get<Pack[]>(`${this.apiUrl}/allPacks`);
@@ -37,14 +38,16 @@ export class PacksService {
     );
   }
 
-  savePack(formData: FormData,categorie :number): Observable<any> {
+  savePack(formData: FormData, categorie: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/savePack?categorieId=${categorie}`, formData);
   }
+
 
   updatePack(packData: Pack): Observable<Pack> {
     console.log(packData.packId);
     return this.http.put<Pack>(`${this.apiUrl}/updatePack/${packData.packId}`, packData);
   }
+
   deletePack(packId: number): Observable<any> {
     if (!packId) {
       throw new Error('Pack ID is required');
@@ -61,6 +64,7 @@ export class PacksService {
     );
   }
 
+
   getCategory(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl_Categories).pipe(
       catchError(error => {
@@ -71,11 +75,15 @@ export class PacksService {
   }
 
 
-  assignGamesToPack(gameIds: number[]): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/savePack`, gameIds);
+  assignGamesToPack(gameIds: number[], packId: number[]): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${packId}/assign-games`, gameIds);
   }
 
   generatePackInfo(games: string[]): Observable<any> {
-    return this.http.post(this.apiUrl_Ai, { games });
+    return this.http.post(this.apiUrl_Ai, {games});
+  }
+
+  createCategorie(cat: string[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/createCategorie`, cat);
   }
 }
