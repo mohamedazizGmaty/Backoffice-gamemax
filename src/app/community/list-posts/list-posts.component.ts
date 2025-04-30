@@ -71,7 +71,6 @@ sendToChatbot() {
       res => {
         this.botReply = res.reply;
 
-        // Si tu veux que la réponse remplisse le champ du post automatiquement :
         this.postData.gameTitle = this.botReply; // ou content, selon ce que tu veux
       },
       error => {
@@ -122,8 +121,8 @@ sendToChatbot() {
     communityId: 1,  // Exemple de communityId, adapte selon tes besoins
     title: '',       // Le titre du post (à remplir par l'utilisateur)
     content: '',     // Le contenu du post (à remplir par l'utilisateur)
-    authorId: 1,     // Exemple d'ID d'auteur, adapte selon tes besoins
-    publisherId: 1,  // L'ID du publisher, il devrait correspondre à l'utilisateur connecté
+    authorId: this.authService.currentUserValue?.userId,     // Exemple d'ID d'auteur, adapte selon tes besoins
+    publisherId: this.authService.currentUserValue?.userId,  // L'ID du publisher, il devrait correspondre à l'utilisateur connecté
     creationDate: new Date().toISOString(),  // Date actuelle, adaptative à l'instant où le post est créé
     visibility: 'Public'  // Valeur par défaut
   };
@@ -154,7 +153,7 @@ switchLanguage(language: string) {
     this.filteredPosts = this.posts; // au départ on affiche tous les posts
 
     console.log(this.filteredPosts);
-    const userId = 1; // ou n’importe quel id pour test statique
+    const userId = this.authService.currentUserValue?.userId; // ou n’importe quel id pour test statique
     this.postService.getUserbyId(userId).subscribe(user => {
       this.userData = user;
       console.log(this.userData);
@@ -404,8 +403,8 @@ submitPost() {
     communityId: 1,
     title: this.postData.gameTitle || 'Annonce jeu',
     content: content.trim(),
-    authorId: 1,
-    publisherId: 1,
+    authorId: this.authService.currentUserValue?.userId,
+    publisherId: this.authService.currentUserValue?.userId,
     creationDate: new Date().toISOString(),
     visibility: 'Public'
   };

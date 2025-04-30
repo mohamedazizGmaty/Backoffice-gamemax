@@ -41,6 +41,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AiChatbotComponent } from './community/ai-chatbot/ai-chatbot.component';
 import { ChatbotComponent } from './community/chatbot/chatbot.component';
 import { ListPostsComponent } from './community/list-posts/list-posts.component';
+import { AssetsGameComponent } from './cloud-game/assets-game/assets-game.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     AiChatbotComponent,
     ChatbotComponent,
-    ListPostsComponent
+    ListPostsComponent,
+    AssetsGameComponent
 
   ],
   imports: [

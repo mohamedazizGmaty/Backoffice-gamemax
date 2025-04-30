@@ -24,6 +24,7 @@ import {AddArticleComponent} from "./games/components/add-article/add-article.co
 import {ArticleDetailsComponent} from "./games/components/article-details/article-details.component";
 import {CouponComponent} from "./games/components/coupon/coupon.component";
 import { ListPostsComponent } from './community/list-posts/list-posts.component';
+import { AssetsGameComponent } from './cloud-game/assets-game/assets-game.component';
 
 
 const routes: Routes = [
@@ -53,6 +54,7 @@ const routes: Routes = [
 
 
   { path: 'posts', component:ListPostsComponent },
+  { path: 'assetsGame', component:AssetsGameComponent },
 
 
 
